@@ -4,354 +4,61 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trip with Joanna</title>
-  <meta name="description" content="Kasper & Joanna's travel memories — Australia, 沖繩 and 名古屋." />
+  <meta name="description" content="Kasper & Joanna's travel memories — 澳洲 Australia, 沖繩 Okinawa and 名古屋 Nagoya, one page per day." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <a class="skip-link" href="#main">跳到主要內容 Skip to content</a>
   <header class="site-header">
-    <div class="header-inner">
-      <a class="brand" href="#/">Trip with Joanna <span class="heart" aria-hidden="true">❤</span></a>
-      <nav class="site-nav" aria-label="Trips">
-        <a href="#/" data-view="home">首頁</a>
-        <a href="#/australia" data-view="australia">澳洲</a>
-        <a href="#/okinawa" data-view="okinawa">沖繩</a>
-        <a href="#/nagoya" data-view="nagoya">名古屋</a>
+    <div class="wrap header-inner">
+      <a class="brand" href="#/"><span class="brand-mark" aria-hidden="true"></span>Trip with Joanna</a>
+      <nav class="site-nav" aria-label="Trips" id="site-nav">
+        <a href="#/" data-nav="home">首頁</a>
+        <a href="#/australia" data-nav="australia">澳洲</a>
+        <a href="#/okinawa" data-nav="okinawa">沖繩</a>
+        <a href="#/nagoya" data-nav="nagoya">名古屋</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <!-- ================================ HOME ================================ -->
-    <section class="view" id="home">
-      <div class="home-hero">
-        <p class="eyebrow">Kasper &amp; Joanna</p>
-        <h1>我們的旅行回憶</h1>
-        <p class="lead">Every trip we take together, one page at a time.</p>
+  <!-- Every view is rendered here by script.js from trips.js -->
+  <main id="main" tabindex="-1"></main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p class="sig">Kasper <span class="heart" aria-hidden="true">&#10084;</span><span class="visually-hidden">and</span> Joanna</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#/">首頁</a><a href="#/australia">澳洲</a><a href="#/okinawa">沖繩</a><a href="#/nagoya">名古屋</a>
+      </nav>
+      <p>Our travel memories, one page at a time.</p>
+    </div>
+  </footer>
+
+  <!-- Phone: day list opened from the "Day 3 of 11" button -->
+  <dialog class="sheet" id="sheet" aria-labelledby="sheet-title">
+    <div class="sheet-inner">
+      <div class="sheet-handle" aria-hidden="true"></div>
+      <div class="sheet-head">
+        <h2 id="sheet-title">Jump to</h2>
+        <button class="sheet-close" type="button" aria-label="Close day list" data-sheet-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
       </div>
-
-      <div class="trip-grid">
-        <a class="trip-card" href="#/australia">
-          <img class="trip-cover" src="Pictures/Australia/cover.jpg" alt="Sydney Opera House and the city skyline">
-          <div class="trip-card-body">
-            <p class="trip-meta">Dec 23 – Jan 3 · 12 days</p>
-            <h2>澳洲 Australia</h2>
-            <p>Melbourne 墨爾本 · Sydney 雪梨</p>
-          </div>
-        </a>
-        <a class="trip-card" href="#/okinawa">
-          <div class="trip-cover trip-cover-placeholder" data-cover="Pictures/Okinawa/Day1" aria-hidden="true">🌺</div>
-          <div class="trip-card-body">
-            <p class="trip-meta">Japan · 5 days</p>
-            <h2>沖繩 Okinawa</h2>
-            <p>Photos &amp; memories</p>
-          </div>
-        </a>
-        <a class="trip-card" href="#/nagoya">
-          <div class="trip-cover trip-cover-placeholder" data-cover="Pictures/Nagoya/Day1" aria-hidden="true">🏯</div>
-          <div class="trip-card-body">
-            <p class="trip-meta">Japan · 6 days</p>
-            <h2>名古屋 Nagoya</h2>
-            <p>Photos &amp; memories</p>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <!-- ============================== AUSTRALIA ============================= -->
-    <section class="view" id="australia" hidden>
-      <div class="trip-hero" style="--hero-image: url('Pictures/Australia/cover.jpg')">
-        <div class="trip-hero-text">
-          <p class="eyebrow">Dec 23 – Jan 3</p>
-          <h1>澳洲 Australia</h1>
-        </div>
-      </div>
-
-      <div class="trip-toolbar">
-        <div class="city-switch" role="tablist" aria-label="City">
-          <a href="#/australia/melbourne" role="tab" data-city="melbourne">墨爾本 Melbourne</a>
-          <a href="#/australia/sydney" role="tab" data-city="sydney">雪梨 Sydney</a>
-        </div>
-        <nav class="day-chips" aria-label="Days"></nav>
-      </div>
-
-      <!-- ----------------------------- Melbourne ----------------------------- -->
-      <div class="city" id="city-melbourne" data-city="melbourne">
-        <article data-folder="Pictures/Australia/Day1" class="day" id="day-dec24">
-          <p class="day-label">Day 1 · Dec 23–24</p>
-          <h3>🎄 Arrival &amp; Melbourne City</h3>
-          <ol class="timeline">
-            <li><time>Dec 23, 11:45 PM</time> Flight 台北 ✈︎ 墨爾本 · Luggage 23kg × 2
-              <figure><img src="Pictures/Australia/Day1/flight-taipei-melbourne.png" alt="Flight ticket Taipei to Melbourne"></figure>
-            </li>
-            <li><time>12:05 PM</time> Arrive at Melbourne T2</li>
-            <li><time>Afternoon</time> Airbnb, then the city center for lunch at Kumo Desserts Melbourne</li>
-            <li><time>5:00 PM</time> Wander around Melbourne
-              <div class="photo-row">
-                <figure><img src="Pictures/Australia/Day1/state-library-victoria.jpg" alt="State Library Victoria"><figcaption>State Library Victoria</figcaption></figure>
-                <figure><img src="Pictures/Australia/Day1/yarra-river.jpg" alt="Yarra River"><figcaption>Yarra River</figcaption></figure>
-                <figure><img src="Pictures/Australia/Day1/skydeck.jpg" alt="Melbourne Skydeck"><figcaption>Melbourne Skydeck</figcaption></figure>
-              </div>
-            </li>
-          </ol>
-        </article>
-
-        <article data-folder="Pictures/Australia/Day2" class="day" id="day-dec25">
-          <p class="day-label">Day 2 · Dec 25</p>
-          <h3>🎅 Christmas City Day</h3>
-          <ol class="timeline">
-            <li><time>8:00 AM</time> Brekky on Degraves Street — must try Lune Croissanterie 🥐
-              <div class="photo-row">
-                <figure><img src="Pictures/Australia/Day2/coffee-laneway.jpg" alt="Coffee laneway"><figcaption>Coffee laneway</figcaption></figure>
-                <figure><img src="Pictures/Australia/Day2/lune-croissanterie.jpg" alt="Lune Croissanterie"><figcaption>Lune Croissanterie</figcaption></figure>
-              </div>
-            </li>
-            <li><time>10:00 AM</time> St Paul's Cathedral (the stained glass!)
-              <figure><img src="Pictures/Australia/Day2/st-pauls-cathedral.jpg" alt="St Paul's Cathedral"><figcaption>St Paul's Cathedral</figcaption></figure>
-            </li>
-            <li><time>11:00 AM</time> University of Melbourne
-              <figure><img src="Pictures/Australia/Day2/university-of-melbourne.jpg" alt="University of Melbourne"><figcaption>University of Melbourne</figcaption></figure>
-            </li>
-            <li><time>12:00 PM</time> Bourke Street Mall shopping &amp; lunch
-              <figure><img src="Pictures/Australia/Day2/bourke-street-mall.webp" alt="Bourke Street Mall"><figcaption>Bourke Street Mall</figcaption></figure>
-            </li>
-            <li><time>4:00 PM</time> Carlton Gardens
-              <figure><img src="Pictures/Australia/Day2/carlton-gardens.jpg" alt="Carlton Gardens and the Royal Exhibition Building"><figcaption>Carlton Gardens &amp; Royal Exhibition Building</figcaption></figure>
-            </li>
-            <li><time>5:00 PM</time> St Kilda Beach
-              <figure><img src="Pictures/Australia/Day2/st-kilda-beach.webp" alt="St Kilda Beach"><figcaption>Sunset and Christmas hats at St Kilda</figcaption></figure>
-            </li>
-            <li><time>6:30 PM</time> Dinner in the city, early night before tomorrow's tour</li>
-          </ol>
-        </article>
-
-        <article data-folder="Pictures/Australia/Day3" class="day" id="day-dec26">
-          <p class="day-label">Day 3 · Dec 26</p>
-          <h3>🐧 Penguins &amp; Steam Train</h3>
-          <ol class="timeline">
-            <li><time>10:30 AM</time> Depart from Grand Hyatt Melbourne</li>
-            <li><time>12:45 PM</time> Puffing Billy steam train
-              <figure><img src="Pictures/Australia/Day3/puffing-billy.png" alt="Puffing Billy steam train"><figcaption>Puffing Billy</figcaption></figure>
-            </li>
-            <li><time>2:00 PM</time> Maru Koala &amp; Animal Park</li>
-            <li><time>5:10 PM</time> Penguin Parade at Phillip Island
-              <figure><img src="Pictures/Australia/Day3/penguin-parade.jpg" alt="Penguins returning to the beach"><figcaption>Penguins coming home</figcaption></figure>
-            </li>
-            <li><time>9:30 PM</time> Back to Melbourne</li>
-            <li class="note">Penguin Parade + Koala Park + Train tour: $4,388 · <a href="https://www.kkday.com/zh-tw/product/137696" target="_blank" rel="noopener">KKday</a></li>
-          </ol>
-        </article>
-
-        <article data-folder="Pictures/Australia/Day4" class="day" id="day-dec27">
-          <p class="day-label">Day 4 · Dec 27</p>
-          <h3>🏞️ Great Ocean Road &amp; 12 Apostles</h3>
-          <ol class="timeline">
-            <li><time>7:30 AM</time> Head toward Torquay and Kennett River
-              <figure><img src="Pictures/Australia/Day4/great-ocean-road.webp" alt="Great Ocean Road"><figcaption>Great Ocean Road</figcaption></figure>
-            </li>
-            <li><time>12:30 PM</time> Lunch at Apollo Bay</li>
-            <li><time>1:30 PM</time> Great Otway National Park
-              <div class="photo-row">
-                <figure><img src="Pictures/Australia/Day4/great-otway-national-park.jpg" alt="Great Otway National Park"><figcaption>Great Otway National Park</figcaption></figure>
-                <figure><img src="Pictures/Australia/Day4/wild-koala.png" alt="Wild koala in a tree"><figcaption>A wild koala!</figcaption></figure>
-              </div>
-            </li>
-            <li><time>4:00 PM</time> The Twelve Apostles
-              <figure><img src="Pictures/Australia/Day4/twelve-apostles.jpg" alt="The Twelve Apostles"><figcaption>The Twelve Apostles</figcaption></figure>
-            </li>
-            <li><time>5:30 PM</time> Loch Ard Gorge
-              <figure><img src="Pictures/Australia/Day4/loch-ard-gorge.jpg" alt="Loch Ard Gorge"><figcaption>Loch Ard Gorge</figcaption></figure>
-            </li>
-            <li><time>6:30 PM</time> Back to Melbourne</li>
-          </ol>
-        </article>
-
-        <a class="next-city" href="#/australia/sydney">Next: 雪梨 Sydney →</a>
-      </div>
-
-      <!-- ------------------------------ Sydney ------------------------------- -->
-      <div class="city" id="city-sydney" data-city="sydney" hidden>
-        <article data-folder="Pictures/Australia/Day5" class="day" id="day-dec28">
-          <p class="day-label">Day 5 · Dec 28</p>
-          <h3>🏛️ Sydney Harbour &amp; Opera House</h3>
-          <ol class="timeline">
-            <li><time>7:00 AM</time> Fly Melbourne ✈︎ Sydney (at the airport by 5:30 AM · <a href="https://maps.app.goo.gl/RkHfqvoCXJ3j8sVP6" target="_blank" rel="noopener">terminal map</a>)
-              <figure><img src="Pictures/Australia/Day5/flight-melbourne-sydney.png" alt="Flight ticket Melbourne to Sydney"></figure>
-            </li>
-            <li><time>8:25 AM</time> Arrive at Sydney Airport</li>
-            <li><time>10:00 AM</time> Brunch at Bills Surry Hills
-              <figure><img src="Pictures/Australia/Day5/bills-surry-hills.jpg" alt="Bills Surry Hills"><figcaption>Bills</figcaption></figure>
-            </li>
-            <li><time>11:00 AM</time> Walk around the Sydney Opera House
-              <figure><img src="Pictures/Australia/Day5/opera-house.webp" alt="Sydney Opera House"><figcaption>Sydney Opera House</figcaption></figure>
-            </li>
-            <li><time>2:00 PM</time> Shopping and Toby's Estate Coffee, 25 Martin Place
-              <div class="photo-row">
-                <figure><img src="Pictures/Australia/Day5/tobys-estate.webp" alt="Toby's Estate Coffee"><figcaption>Toby's Estate</figcaption></figure>
-                <figure><img src="Pictures/Australia/Day5/tobys-estate-food.webp" alt="Food at Toby's Estate"><figcaption>Toby's Estate food</figcaption></figure>
-              </div>
-            </li>
-            <li><time>7:35 PM</time> Sydney Harbour BridgeClimb
-              <figure><img src="Pictures/Australia/Day5/bridge-climb.jpg" alt="Sydney Harbour Bridge climb"><figcaption>BridgeClimb</figcaption></figure>
-            </li>
-          </ol>
-        </article>
-
-        <article data-folder="Pictures/Australia/Day6" class="day" id="day-dec29">
-          <p class="day-label">Day 6 · Dec 29</p>
-          <h3>🐟 Sydney Central</h3>
-          <ol class="timeline">
-            <li><time>8:30 AM</time> University of Sydney and Hyde Park
-              <div class="photo-row">
-                <figure><img src="Pictures/Australia/Day6/university-of-sydney.jpg" alt="University of Sydney"><figcaption>University of Sydney</figcaption></figure>
-                <figure><img src="Pictures/Australia/Day6/hyde-park.webp" alt="Hyde Park"><figcaption>Hyde Park</figcaption></figure>
-              </div>
-            </li>
-            <li><time>11:30 AM</time> Lunch (Betty's Burgers) and dessert (Gelato Mochi) at Regent Place
-              <figure><img src="Pictures/Australia/Day6/regent-place.jpg" alt="Regent Place"><figcaption>Regent Place</figcaption></figure>
-            </li>
-            <li><time>1:30 PM</time> Sydney museum
-              <figure><img src="Pictures/Australia/Day6/sydney-museum.jpg" alt="Sydney museum"><figcaption>Sydney museum</figcaption></figure>
-            </li>
-            <li><time>4:00 PM</time> Pitt Street Mall and The Strand Arcade
-              <div class="photo-row">
-                <figure><img src="Pictures/Australia/Day6/pitt-street-mall.jpg" alt="Pitt Street Mall"><figcaption>Pitt Street Mall</figcaption></figure>
-                <figure><img src="Pictures/Australia/Day6/strand-arcade.jpg" alt="The Strand Arcade"><figcaption>The Strand Arcade</figcaption></figure>
-              </div>
-            </li>
-            <li><time>6:15 PM</time> Epicurean buffet
-              <div class="photo-row">
-                <figure><img src="Pictures/Australia/Day6/epicurean-restaurant.jpg" alt="Epicurean restaurant"></figure>
-                <figure><img src="Pictures/Australia/Day6/epicurean-buffet.jpg" alt="Epicurean buffet"></figure>
-              </div>
-            </li>
-            <li><time>8:30 PM</time> Crown Casino
-              <figure><img src="Pictures/Australia/Day6/crown-sydney.jpg" alt="Crown Sydney"></figure>
-            </li>
-          </ol>
-        </article>
-
-        <article data-folder="Pictures/Australia/Day7" class="day" id="day-dec30">
-          <p class="day-label">Day 7 · Dec 30</p>
-          <h3>🏞️ Blue Mountains</h3>
-          <ol class="timeline">
-            <li><time>7:30 AM</time> Leave from 68 Harbour Street</li>
-            <li><time>Morning</time> Three Sisters at Echo Point
-              <figure><img src="Pictures/Australia/Day7/three-sisters.jpeg" alt="The Three Sisters"><figcaption>The Three Sisters</figcaption></figure>
-            </li>
-            <li><time>Afternoon</time> Katoomba Scenic Railway
-              <figure><img src="Pictures/Australia/Day7/scenic-world.jpg" alt="Scenic World Katoomba"><figcaption>Scenic Railway</figcaption></figure>
-            </li>
-            <li><time>6:00 PM</time> Back to Sydney Central by boat or bus</li>
-          </ol>
-        </article>
-
-        <article data-folder="Pictures/Australia/Day8" class="day" id="day-dec31">
-          <p class="day-label">Day 8 · Dec 31</p>
-          <h3>🎆 New Year's Eve Fireworks</h3>
-          <ol class="timeline">
-            <li><time>8:30 AM</time> Claim a spot at the Royal Botanic Garden and wait for the fireworks
-              <figure><img src="Pictures/Australia/Day8/new-years-eve-fireworks.avif" alt="New Year's Eve fireworks over Sydney Harbour"><figcaption>Happy New Year!</figcaption></figure>
-            </li>
-          </ol>
-        </article>
-
-        <article data-folder="Pictures/Australia/Day9" class="day" id="day-jan1">
-          <p class="day-label">Day 9 · Jan 1</p>
-          <h3>🦘 Taronga Zoo &amp; Luna Park</h3>
-          <ol class="timeline">
-            <li><time>8:30 AM</time> Taronga Zoo (ticket $950, koala photo $290)
-              <figure><img src="Pictures/Australia/Day9/taronga-zoo.jpg" alt="Taronga Zoo with the Opera House behind"><figcaption>Taronga Zoo, with the Opera House across the water</figcaption></figure>
-            </li>
-            <li><time>12:30 PM</time> Lunch at Sydney Fish Market
-              <figure><img src="Pictures/Australia/Day9/sydney-fish-market.webp" alt="Sydney Fish Market"></figure>
-            </li>
-            <li><time>1:30 PM</time> Watermelon cake for dessert
-              <figure><img src="Pictures/Australia/Day9/watermelon-cake.webp" alt="Strawberry watermelon cake"></figure>
-            </li>
-            <li><time>3:30 PM</time> Luna Park
-              <figure><img src="Pictures/Australia/Day9/luna-park.avif" alt="Luna Park Sydney"></figure>
-            </li>
-            <li><time>6:00 PM</time> Dinner at 12 Miller Street, Haymarket
-              <figure><img src="Pictures/Australia/Day9/12-miller-street.jpg" alt="Dinner at Haymarket"></figure>
-            </li>
-            <li><time>7:30 PM</time> Maybe drinks at PS40</li>
-          </ol>
-        </article>
-
-        <article data-folder="Pictures/Australia/Day10" class="day" id="day-jan2">
-          <p class="day-label">Day 10 · Jan 2</p>
-          <h3>🏖️ DFO Homebush &amp; Bondi Beach</h3>
-          <ol class="timeline">
-            <li><time>8:30 AM</time> Breakfast and shopping at DFO Homebush
-              <figure><img src="Pictures/Australia/Day10/dfo-homebush.jpg" alt="DFO Homebush"></figure>
-            </li>
-            <li><time>12:30 PM</time> Bondi Beach
-              <figure><img src="Pictures/Australia/Day10/bondi-beach.jpg" alt="Bondi Beach"><figcaption>Bondi Beach</figcaption></figure>
-            </li>
-            <li><time>3:30 PM</time> Westfield Bondi Junction
-              <figure><img src="Pictures/Australia/Day10/westfield-bondi-junction.jpg" alt="Westfield Bondi Junction"></figure>
-            </li>
-          </ol>
-        </article>
-
-        <article data-folder="Pictures/Australia/Day11" class="day" id="day-jan3">
-          <p class="day-label">Day 11 · Jan 3</p>
-          <h3>✈️ Flying Home</h3>
-          <ol class="timeline">
-            <li><time>6:00 PM</time> Sydney ✈︎ Brisbane (at the airport by 4:30 PM)
-              <figure><img src="Pictures/Australia/Day11/flight-sydney-brisbane.png" alt="Flight ticket Sydney to Brisbane"></figure>
-            </li>
-            <li><time>10:35 PM</time> Brisbane ✈︎ Taiwan
-              <figure><img src="Pictures/Australia/Day11/flight-brisbane-taipei.png" alt="Flight ticket Brisbane to Taiwan"></figure>
-            </li>
-          </ol>
-        </article>
-
-        <article data-folder="Pictures/Australia/Schedule" class="day references" id="day-references">
-          <p class="day-label">Bookings</p>
-          <h3>🔗 References &amp; Tickets</h3>
-          <ul>
-            <li><a href="https://www.kkday.com/zh-tw/product/137696" target="_blank" rel="noopener">Penguin Parade + Koala Park + Train (KKday)</a></li>
-            <li><a href="https://www.bridgeclimb.com/climbs-prices/summit" target="_blank" rel="noopener">Sydney Harbour BridgeClimb</a></li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <!-- =============================== OKINAWA ============================== -->
-    <section class="view" id="okinawa" hidden>
-      <div class="trip-hero trip-hero-plain">
-        <div class="trip-hero-text">
-          <p class="eyebrow">Japan</p>
-          <h1>🌺 沖繩 Okinawa</h1>
-        </div>
-      </div>
-      <div class="trip-days" data-folder="Pictures/Okinawa" data-days="5"></div>
-    </section>
-
-    <!-- =============================== NAGOYA =============================== -->
-    <section class="view" id="nagoya" hidden>
-      <div class="trip-hero trip-hero-plain">
-        <div class="trip-hero-text">
-          <p class="eyebrow">Japan</p>
-          <h1>🏯 名古屋 Nagoya</h1>
-        </div>
-      </div>
-      <div class="trip-days" data-folder="Pictures/Nagoya" data-days="6"></div>
-    </section>
-  </main>
-
-  <footer class="site-footer">Kasper <span class="heart" aria-hidden="true">❤</span> Joanna</footer>
-
-  <dialog class="lightbox" aria-label="Photo">
-    <button class="lightbox-close" aria-label="Close">×</button>
-    <img alt="">
-    <p class="lightbox-caption"></p>
+      <nav class="rail in-sheet" aria-label="Trip pages" id="sheet-rail"></nav>
+    </div>
   </dialog>
 
+  <dialog class="lightbox" aria-label="Photo">
+    <div class="lb-stage"><img alt=""></div>
+    <p class="lb-caption"></p>
+    <span class="lb-count" aria-hidden="true"></span>
+    <button class="lb-btn lb-close" type="button" aria-label="Close" data-lb="close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <button class="lb-btn lb-prev" type="button" aria-label="Previous photo" data-lb="prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+    <button class="lb-btn lb-next" type="button" aria-label="Next photo" data-lb="next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+  </dialog>
+
+  <script src="trips.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
