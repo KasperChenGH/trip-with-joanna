@@ -11,7 +11,7 @@ window.TRIPS = [
     "folder": "Pictures/Australia",
     "country": "Australia",
     "dates": "Dec 23 – Jan 3",
-    "cover": "Pictures/Australia/cover.jpg",
+    "cover": "Pictures/Australia/cover-twelve-apostles.jpg",
     "route": "台北 → Melbourne → Sydney → Brisbane → 台北",
     "links": [
       {

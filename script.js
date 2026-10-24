@@ -177,9 +177,7 @@ function pageHome() {
       <p class="trip-meta">${esc([trip.dates, trip.length].filter(Boolean).join(' · '))}</p><h3>${esc(trip.name)}<span class="latin">${esc(trip.en)}</span></h3>
       <p class="where">${esc(trip.cities.length ? trip.cities.join(' · ') : trip.country)}</p><span class="go">${trip.days.length} days, one page each <span aria-hidden="true">→</span></span></div></a>`;
   }).join('');
-  const countries = new Set(TRIPS.map(trip => trip.country)).size;
-  return `<section class="wrap masthead"><div><p class="eyebrow">Kasper &amp; Joanna · Travel journal</p><h1 id="page-h" tabindex="-1">我們的旅行回憶</h1><p class="lead display-it">Every trip we take together, one day at a time.</p></div>
-    <ul class="stats" aria-label="At a glance"><li><b>${pad(TRIPS.length)}</b>trips · 旅程</li><li><b>${pad(countries)}</b>countries · 國家</li></ul></section>
+  return `<h1 class="visually-hidden" id="page-h" tabindex="-1">我們的旅行回憶 — Trip with Joanna</h1>
     <section class="carousel on-dark" aria-roledescription="carousel" aria-label="Our trips" id="carousel"><div class="slides">${slides}</div>
     </section>
     <section class="wrap trips" aria-labelledby="trips-title"><div class="trips-head"><h2 id="trips-title">旅程<span class="display-it">Trips</span></h2><p>${TRIPS.length} trips · one page per day</p></div><div class="trip-grid">${cards}</div></section>`;

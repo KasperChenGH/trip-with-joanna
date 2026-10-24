@@ -45,13 +45,8 @@ h1:focus, h2:focus { outline: none; }
 .site-nav a[aria-current="page"] { color: var(--accent-deep); background: var(--tint); }
 
 /* ============================================================
-   HOME — masthead, rotating hero, trip cards
+   HOME — rotating hero, trip cards
    ============================================================ */
-.masthead { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding-top: clamp(32px, 6vw, 64px); padding-bottom: 28px; }
-.masthead h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); }
-.masthead .lead { margin: 10px 0 0; font-size: clamp(1.15rem, 2vw, 1.5rem); color: var(--ink-2); }
-.stats { display: flex; gap: 28px; margin: 0; padding: 0; list-style: none; color: var(--muted); font-size: .85rem; font-weight: 600; }
-.stats b { display: block; font-family: var(--font-display); font-style: italic; font-weight: 300; font-size: 2.2rem; color: var(--accent); line-height: 1; }
 
 .carousel { position: relative; height: min(68vh, 620px); min-height: 400px; isolation: isolate; color: var(--on-dark); }
 .slides { position: absolute; inset: 0; }
@@ -310,7 +305,6 @@ dialog.lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; bo
   .site-nav { width: calc(100% + 2 * var(--gutter)); margin: 0 calc(-1 * var(--gutter)); overflow-x: auto; scrollbar-width: none; padding: 6px calc(var(--gutter) - 14px); }
   .site-nav::-webkit-scrollbar { display: none; }
   .site-nav a { flex: none; }
-  .stats { gap: 20px; }
   .carousel { height: min(62vh, 520px); min-height: 420px; }
   .slide h2 { font-size: 2.4rem; }
   .trip-grid { grid-template-columns: 1fr; }
