@@ -731,11 +731,11 @@ window.TRIPS = [
     "folder": "Pictures/Nagoya",
     "country": "日本",
     "dates": "9月25日 – 9月30日",
-    "route": "中部機場 → 美濃 → 白川鄉 → 飛驒高山 → 上高地 → 名古屋",
-    "cover": "Pictures/Nagoya/cover-shirakawa-go.jpg",
+    "route": "中部機場 → 美濃 → 下呂溫泉合掌村 → 飛驒高山 → 上高地 → 名古屋",
+    "cover": "Pictures/Nagoya/cover-gero-gassho-mura.jpg",
     "coverCredit": {
-      "text": "白川鄉 · Alexkom000 · CC BY 4.0",
-      "href": "https://commons.wikimedia.org/wiki/File:2024-10-26_Shirakawa-go_02.jpg"
+      "text": "下呂溫泉合掌村 · 先従隗始 · CC0",
+      "href": "https://commons.wikimedia.org/wiki/File:Gero_Onsen_Gassho-mura_20230715_10.jpg"
     },
     "captions": {
       "Pictures/Nagoya/Schedule/nagoya-itinerary.jpg": "行程總覽",
@@ -763,12 +763,12 @@ window.TRIPS = [
       },
       {
         "date": "9月26日",
-        "title": "🏡 白川鄉合掌村 · 飛驒高山",
+        "title": "🏡 下呂溫泉合掌村 · 飛驒高山",
         "cover": "Pictures/Nagoya/Day2/LINE_ALBUM_926名古屋day2_261025_25.jpg",
         "timeline": [
           {
             "time": "上午 9:30",
-            "text": "白川鄉合掌村"
+            "text": "下呂溫泉合掌村"
           },
           {
             "time": "午餐",
