@@ -10,6 +10,7 @@ Kasper & Joanna's personal travel-memory blog. Static site on GitHub Pages.
 
 ```
 index.html            Page shell only: header, <main id="main">, footer, phone day-list sheet, lightbox
+logo.png, favicon.png, apple-touch-icon.png  Round logo from our photo (Okinawa Day 4 #49, faces crop, teal ring)
 trips.js              Trip content (window.TRIPS): names, dates, Australia itinerary per day
 script.js             Hash router + page renderers, GitHub-API photo listing, carousel, lightbox
 style.css             Design tokens on :root (Coastal Editorial), then components; mobile rules at ≤700px

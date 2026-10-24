@@ -37,8 +37,7 @@ h1:focus, h2:focus { outline: none; }
 .site-header { position: sticky; top: 0; z-index: 50; background: rgba(250,250,247,.88); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: var(--header-h); }
 .brand { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: var(--ink); text-decoration: none; font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em; white-space: nowrap; }
-.brand-mark { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(155deg, var(--sky) 0%, var(--accent) 55%, var(--accent-deep) 100%); position: relative; flex: none; }
-.brand-mark::after { content: ""; position: absolute; left: 4px; right: 4px; top: 13px; height: 2px; background: rgba(255,255,255,.75); border-radius: 2px; }
+.brand-mark { width: 40px; height: 40px; border-radius: 50%; flex: none; display: block; box-shadow: 0 1px 3px rgba(14,26,36,.18); }  /* logo.png: our photo (Okinawa Day 4 #49) */
 .site-nav { display: flex; gap: 2px; }
 .site-nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border-radius: 999px; color: var(--ink-2); text-decoration: none; font-weight: 600; font-size: .95rem; transition: background .2s, color .2s; }
 .site-nav a:hover { background: var(--tint-2); color: var(--ink); }
