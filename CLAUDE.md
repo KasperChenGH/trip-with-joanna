@@ -35,7 +35,7 @@ Pictures/
 
 - **Design:** "Coastal Editorial" (ocean teal `--accent #0E7490`, sand-white `--bg #FAFAF7`; Manrope + Fraunces italic + Noto Sans TC). Chosen by the user from subagent mockups; the phone layout still needs a redesign (desktop was built first on purpose).
 - **Routes** (all rendered into `<main>` by `render()` in `script.js`):
-  - `#/` home — hero rotating through every trip every 6s (no controls, by user request; pauses on hover/focus, off with reduced motion), trip cards
+  - `#/` home — compact masthead (title + trips/countries count), hero rotating through every trip every 6s (no controls, by user request; pauses on hover/focus, off with reduced motion), trip cards
   - `#/<trip>` trip overview — hero, schedule card, one card per day (grouped by city when days have one)
   - `#/<trip>/schedule` and `#/<trip>/day/<N>` — side-rail frame: trip band, left rail (overview, schedule, every day), one page in the right pane, prev/next pager. On phones the rail becomes a "Day N of M" button + bottom sheet and a sticky prev/next bar.
 - **Every trip uses the same pages.** A trip in `trips.js` has `id`, `name`, `en`, `folder`, `country`, optional `dates`, `cover`, `route`, `links`, and `days`: either a count (`days: 5`, untitled days) or a list of `{ date, city, title, timeline: [{ time, text, photos: [{ src, alt, caption }] }] }`. Itinerary text supports `[label](https://link)`. Times use 12-hour format (8:30 AM).
