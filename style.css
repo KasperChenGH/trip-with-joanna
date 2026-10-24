@@ -252,7 +252,10 @@ dialog.lightbox { border: 0; padding: 0; background: transparent; inset: 0; max-
 @supports (height: 100dvh) { dialog.lightbox { max-height: 100dvh; height: 100dvh; } }
 dialog.lightbox::backdrop { background: rgba(8,16,24,.96); }
 dialog.lightbox .lb-stage { position: fixed; inset: 0; display: grid; place-items: center; padding: 64px 72px 104px; }
-dialog.lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; cursor: default; }
+dialog.lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; cursor: zoom-in; touch-action: none; user-select: none; -webkit-user-select: none; transition: transform .15s ease; }
+dialog.lightbox.zoomed img { cursor: grab; }
+dialog.lightbox.dragging img { transition: none; cursor: grabbing; }
+.lb-hint { position: fixed; left: 50%; top: 26px; transform: translateX(-50%); font-size: .78rem; color: rgba(255,255,255,.6); white-space: nowrap; pointer-events: none; }
 .lb-btn { position: fixed; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.28); background: rgba(255,255,255,.08); color: #fff; display: grid; place-items: center; cursor: pointer; transition: background .2s; }
 .lb-btn:hover { background: rgba(255,255,255,.18); }
 .lb-btn svg { width: 20px; height: 20px; }

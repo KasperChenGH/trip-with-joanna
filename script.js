@@ -485,7 +485,92 @@ function setUpLightbox() {
   let photos = [];
   let index = 0;
 
+  // Zoom inside the lightbox: wheel, double-click / double-tap or pinch; drag to move while zoomed.
+  // (The browser's own pinch-zoom can't pan inside a full-screen dialog.)
+  const zoom = { scale: 1, x: 0, y: 0 };
+  const pointers = new Map();
+  let pinch = null;
+  let moved = false;
+  let lastTap = 0;
+
+  const applyZoom = () => {
+    const maxX = image.offsetWidth * (zoom.scale - 1) / 2;
+    const maxY = image.offsetHeight * (zoom.scale - 1) / 2;
+    zoom.x = Math.max(-maxX, Math.min(maxX, zoom.x));
+    zoom.y = Math.max(-maxY, Math.min(maxY, zoom.y));
+    image.style.transform = zoom.scale > 1 ? `translate(${zoom.x}px, ${zoom.y}px) scale(${zoom.scale})` : '';
+    lightbox.classList.toggle('zoomed', zoom.scale > 1);
+  };
+  // Scale to `scale`, keeping the point under (cx, cy) where it is.
+  const zoomTo = (scale, cx, cy) => {
+    const next = Math.max(1, Math.min(5, scale));
+    const rect = image.getBoundingClientRect();
+    const ux = (cx - (rect.left + rect.width / 2)) / zoom.scale;
+    const uy = (cy - (rect.top + rect.height / 2)) / zoom.scale;
+    zoom.x += (zoom.scale - next) * ux;
+    zoom.y += (zoom.scale - next) * uy;
+    zoom.scale = next;
+    if (next === 1) zoom.x = zoom.y = 0;
+    applyZoom();
+  };
+  const toggleZoom = (cx, cy) => zoomTo(zoom.scale > 1 ? 1 : 2.5, cx, cy);
+  const resetZoom = () => {
+    zoom.scale = 1;
+    zoom.x = zoom.y = 0;
+    applyZoom();
+  };
+
+  image.addEventListener('wheel', event => {
+    event.preventDefault();
+    zoomTo(zoom.scale * (event.deltaY < 0 ? 1.25 : 0.8), event.clientX, event.clientY);
+  }, { passive: false });
+  image.addEventListener('dblclick', event => toggleZoom(event.clientX, event.clientY));
+  image.addEventListener('dragstart', event => event.preventDefault());
+  image.addEventListener('pointerdown', event => {
+    image.setPointerCapture(event.pointerId);
+    pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    moved = false;
+    if (pointers.size === 2) {
+      const [a, b] = [...pointers.values()];
+      pinch = { dist: Math.hypot(a.x - b.x, a.y - b.y), scale: zoom.scale };
+    }
+    lightbox.classList.add('dragging');
+  });
+  image.addEventListener('pointermove', event => {
+    const last = pointers.get(event.pointerId);
+    if (!last) return;
+    const now = { x: event.clientX, y: event.clientY };
+    pointers.set(event.pointerId, now);
+    if (pointers.size === 2 && pinch) {
+      const [a, b] = [...pointers.values()];
+      zoomTo(pinch.scale * Math.hypot(a.x - b.x, a.y - b.y) / pinch.dist, (a.x + b.x) / 2, (a.y + b.y) / 2);
+      moved = true;
+    } else if (zoom.scale > 1) {
+      zoom.x += now.x - last.x;
+      zoom.y += now.y - last.y;
+      applyZoom();
+      if (Math.abs(now.x - last.x) + Math.abs(now.y - last.y) > 2) moved = true;
+    }
+  });
+  const endPointer = event => {
+    pointers.delete(event.pointerId);
+    if (pointers.size < 2) pinch = null;
+    if (!pointers.size) lightbox.classList.remove('dragging');
+    // Double-tap to zoom on touch screens (they don't send dblclick reliably).
+    if (event.type === 'pointerup' && event.pointerType === 'touch' && !moved) {
+      if (event.timeStamp - lastTap < 300) {
+        toggleZoom(event.clientX, event.clientY);
+        lastTap = 0;
+      } else {
+        lastTap = event.timeStamp;
+      }
+    }
+  };
+  image.addEventListener('pointerup', endPointer);
+  image.addEventListener('pointercancel', endPointer);
+
   const show = n => {
+    resetZoom();
     index = (n + photos.length) % photos.length;
     const photo = photos[index];
     const figcaption = photo.closest('figure') && photo.closest('figure').querySelector('figcaption');
@@ -524,6 +609,7 @@ function setUpLightbox() {
     if (event.key === 'ArrowRight') show(index + 1);
     if (event.key === 'ArrowLeft') show(index - 1);
   });
+  lightbox.addEventListener('close', resetZoom);
 }
 
 window.addEventListener('hashchange', render);
