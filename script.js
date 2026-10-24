@@ -145,9 +145,8 @@ function photoGrid(photos, alt) {
 
 function renderTimeline(day) {
   return `<ol class="timeline">${day.timeline.map(item => {
-    const photos = item.photos || [];
-    // A lone photo looks lost under its stop, so it joins the day's photo grid below instead.
-    return `<li><span class="time">${esc(item.time)}</span><p class="act">${rich(item.text)}</p>${photos.length > 1 ? photoGrid(photos) : ''}</li>`;
+    // Same for every trip: the list says where we went; all photos are in the grid below it.
+    return `<li><span class="time">${esc(item.time)}</span><p class="act">${rich(item.text)}</p></li>`;
   }).join('')}</ol>`;
 }
 
@@ -331,14 +330,13 @@ function paneSchedule(trip) {
 
 function paneDay(trip, n) {
   const day = trip.days[n - 1];
-  const inline = day.timeline.filter(item => (item.photos || []).length > 1).flatMap(item => item.photos);
-  const singles = day.timeline.filter(item => (item.photos || []).length === 1).map(item => item.photos[0]);
+  const itineraryPhotos = timelinePhotos(day);
   return `<header class="pane-head"><span class="day-num" aria-hidden="true">${pad(n)}</span>
     <p class="day-label">第 ${n} 天 / 共 ${trip.days.length} 天${day.date ? ` · ${esc(day.date)}` : ''}${day.city ? `<span class="city-tag">${esc(day.city)}</span>` : ''}</p>
     <h1 id="page-h" tabindex="-1">${esc(dayTitle(day))}</h1></header>
     ${day.timeline.length ? renderTimeline(day) : ''}
     <div data-gallery-folder="${esc(day.folder)}" data-gallery-label="${esc(`${trip.name}第 ${n} 天照片`)}"
-      data-gallery-exclude="${esc(JSON.stringify(inline.map(photo => photo.src)))}" data-gallery-first="${esc(JSON.stringify(singles))}"
+      data-gallery-first="${esc(JSON.stringify(itineraryPhotos))}"
       ${day.timeline.length ? ' data-gallery-extra' : ''}></div>
     ${pager(trip, { view: 'day', n })}`;
 }
@@ -379,12 +377,11 @@ function fillPhotos(root) {
       .catch(() => {});
   });
 
-  // Day page grid: the itinerary's single photos first, then every other photo in the day's folder.
-  // Japan days (no itinerary) simply show the whole folder.
+  // Day page grid: the itinerary's photos first (with their captions), then every other photo in the day's folder.
   root.querySelectorAll('[data-gallery-folder]').forEach(el => {
     const folder = el.dataset.galleryFolder;
     const first = JSON.parse(el.dataset.galleryFirst || '[]');
-    const shown = new Set([...JSON.parse(el.dataset.galleryExclude || '[]'), ...first.map(photo => photo.src)]);
+    const shown = new Set(first.map(photo => photo.src));
     const extra = el.hasAttribute('data-gallery-extra');
     const show = photos => {
       if (photos.length) {
