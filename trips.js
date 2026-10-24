@@ -602,7 +602,7 @@ window.TRIPS = [
       "href": "https://commons.wikimedia.org/wiki/File:Kouri_Bridge_(15130568259).jpg"
     },
     "captions": {
-      "Pictures/Okinawa/Schedule/okinawa.png": "行程總覽"
+      "Pictures/Okinawa/Schedule/okinawa-itinerary.jpg": "行程總覽"
     },
     "dates": "4月7日 – 4月11日",
     "days": [
@@ -681,7 +681,7 @@ window.TRIPS = [
       },
       {
         "date": "4月10日",
-        "title": "🤿 青之洞窟 · 古宇利島",
+        "title": "🌊 萬座毛 · 古宇利島",
         "cover": "Pictures/Okinawa/Day4/LINE_ALBUM_410沖繩day4_261024_49.jpg",
         "timeline": [
           {
@@ -690,11 +690,7 @@ window.TRIPS = [
           },
           {
             "time": "上午",
-            "text": "逛青之洞窟"
-          },
-          {
-            "time": "中午",
-            "text": "恩納村青之洞窟浮潛 & 深潛體驗"
+            "text": "萬座毛"
           },
           {
             "time": "午餐",
@@ -712,7 +708,7 @@ window.TRIPS = [
       },
       {
         "date": "4月11日",
-        "title": "🍔 美國村 · A&W",
+        "title": "🍔 港川外人住宅 · A&W",
         "cover": "Pictures/Okinawa/Day5/LINE_ALBUM_411沖繩day5_261024_11.jpg",
         "timeline": [
           {
@@ -726,10 +722,6 @@ window.TRIPS = [
           {
             "time": "午餐",
             "text": "迴轉壽司市場 美浜店"
-          },
-          {
-            "time": "下午",
-            "text": "美國村、Blue Seal Depot Island"
           },
           {
             "time": "晚餐",
