@@ -30,7 +30,10 @@ window.TRIPS = [
       "Pictures/Australia/Day5/booking-bridge-climb.png": "港灣大橋攀登訂位",
       "Pictures/Australia/Day6/maritime-museum.jpg": "澳洲國家海事博物館",
       "Pictures/Australia/Day7/blue-mountains.webp": "藍山",
-      "Pictures/Australia/Day7/scenic-railway.jpg": "景觀鐵道"
+      "Pictures/Australia/Day7/scenic-railway.jpg": "景觀鐵道",
+      "Pictures/Australia/Schedule/australia-itinerary.jpg": "行程總覽",
+      "Pictures/Australia/Schedule/flight-taipei-melbourne-fares.png": "去程機票：台北 → 墨爾本",
+      "Pictures/Australia/Schedule/flight-sydney-taipei-itinerary.png": "回程機票：雪梨 → 布里斯本 → 台北"
     },
     "days": [
       {
@@ -626,6 +629,9 @@ window.TRIPS = [
       "text": "古宇利大橋 · Takuya ASADA · CC BY 2.0",
       "href": "https://commons.wikimedia.org/wiki/File:Kouri_Bridge_(15130568259).jpg"
     },
+    "captions": {
+      "Pictures/Okinawa/Schedule/okinawa.png": "行程總覽"
+    },
     "days": [
       {
         "title": "✈️ 抵達那霸 · 暖暮拉麵",
@@ -771,6 +777,10 @@ window.TRIPS = [
     "coverCredit": {
       "text": "白川鄉 · Alexkom000 · CC BY 4.0",
       "href": "https://commons.wikimedia.org/wiki/File:2024-10-26_Shirakawa-go_02.jpg"
+    },
+    "captions": {
+      "Pictures/Nagoya/Schedule/nagoya-itinerary.jpg": "行程總覽",
+      "Pictures/Nagoya/Schedule/岐阜飛驒高山上高地名古屋_六天五夜行程手冊_含葷素餐廳版.pdf": "完整行程手冊（含葷素餐廳）"
     },
     "days": [
       {
