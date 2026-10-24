@@ -271,9 +271,6 @@ dialog.lightbox.dragging img { transition: none; cursor: grabbing; }
 .footer-inner p { margin: 0; }
 .footer-inner .sig { font-family: var(--font-display); font-style: italic; font-weight: 300; font-size: 1.3rem; color: var(--ink); }
 .footer-inner .sig .heart { color: var(--accent); font-style: normal; }
-.footer-nav { display: flex; gap: 2px; flex-wrap: wrap; margin-left: -12px; }
-.footer-nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; color: var(--ink-2); text-decoration: none; font-weight: 600; }
-.footer-nav a:hover { color: var(--accent-deep); }
 
 /* ============================================================
    PHONE: rail → "Day 3 of 11 ▾" selector + bottom sheet + sticky Prev/Next bar

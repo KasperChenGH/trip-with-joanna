@@ -474,20 +474,9 @@ window.TRIPS = [
       {
         "date": "1月1日",
         "city": "雪梨",
-        "title": "🦘 塔龍加動物園與月神公園",
-        "cover": "Pictures/Australia/Day9/taronga-zoo.jpg",
+        "title": "🎡 雪梨魚市場與月神公園",
+        "cover": "Pictures/Australia/Day9/luna-park.avif",
         "timeline": [
-          {
-            "time": "上午 8:30",
-            "text": "塔龍加動物園（門票 $950，無尾熊合照 $290）",
-            "photos": [
-              {
-                "src": "Pictures/Australia/Day9/taronga-zoo.jpg",
-                "alt": "塔龍加動物園，對岸就是歌劇院",
-                "caption": "塔龍加動物園，對岸就是歌劇院"
-              }
-            ]
-          },
           {
             "time": "中午 12:30",
             "text": "在雪梨魚市場吃午餐",
