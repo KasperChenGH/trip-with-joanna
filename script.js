@@ -33,11 +33,60 @@ function showDay(dayId) {
     sidebarSydney.classList.remove('show'); // Ensure hidden initially
   }
 
-  // Show sidebar toggle button on mobile
+  // Show sidebar toggle button on mobile (only for trips that have a sidebar)
   const toggleButton = document.getElementById('sidebar-toggle');
+  const hasSidebar = dayId === 'Melbourne' || dayId === 'Sydney';
   if (toggleButton) {
-    toggleButton.style.display = window.innerWidth <= 768 ? 'block' : 'none';
+    toggleButton.style.display = hasSidebar && window.innerWidth <= 768 ? 'block' : 'none';
   }
+
+  // Load photo galleries in this section
+  if (selected) {
+    selected.querySelectorAll('.gallery').forEach(loadGallery);
+  }
+}
+
+// Photo galleries: lists every image in the gallery's folder on GitHub,
+// so new photos show up after they are pushed — no HTML edits needed.
+const GITHUB_REPO = 'KasperChenGH/trip-with-joanna';
+const IMAGE_EXTENSIONS = /\.(jpe?g|png|gif|webp|avif)$/i;
+
+function loadGallery(gallery) {
+  if (gallery.dataset.loaded) return;
+  gallery.dataset.loaded = 'true';
+
+  const folder = gallery.dataset.folder;
+  fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${folder}`)
+    .then(response => response.ok ? response.json() : [])
+    .then(files => {
+      const photos = files
+        .filter(file => file.type === 'file' && IMAGE_EXTENSIONS.test(file.name))
+        .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+
+      if (photos.length === 0) {
+        gallery.innerHTML = '<p style="text-align: center; font-style: italic;">Photos coming soon 📷</p>';
+        return;
+      }
+
+      photos.forEach(photo => {
+        const caption = document.createElement('p');
+        caption.style.textAlign = 'center';
+        caption.style.fontStyle = 'italic';
+        caption.textContent = photo.name.replace(/\.[^.]+$/, '');
+
+        const img = document.createElement('img');
+        img.className = 'image';
+        img.loading = 'lazy';
+        img.src = `${folder}/${encodeURIComponent(photo.name)}`;
+        img.alt = caption.textContent;
+
+        gallery.append(caption, img);
+      });
+    })
+    .catch(() => {
+      gallery.dataset.loaded = '';
+      gallery.innerHTML = '<p style="text-align: center; font-style: italic;">Could not load photos right now.</p>';
+    });
 }
 
 function goHome() {
