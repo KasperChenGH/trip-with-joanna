@@ -162,7 +162,8 @@ function photoCredit(trip) {
 
 // A cover area that shows the trip photo, or a teal gradient until the first photo of Day 1 is pushed.
 function coverBackground(trip) {
-  if (trip.cover) return { cls: '', html: `<img src="${esc(trip.cover)}" alt="" fetchpriority="high">${photoCredit(trip)}`, attr: '' };
+  const position = trip.coverPosition ? ` style="object-position: ${esc(trip.coverPosition)}"` : '';
+  if (trip.cover) return { cls: '', html: `<img src="${esc(trip.cover)}" alt="" fetchpriority="high"${position}>${photoCredit(trip)}`, attr: '' };
   return { cls: ' gradient', html: ICON.waves + `<p class="ghost" aria-hidden="true">${esc(trip.en)}</p>`, attr: ` data-cover-folder="${esc(trip.days[0].folder)}"` };
 }
 
@@ -178,7 +179,7 @@ function pageHome() {
   }).join('');
   const cards = TRIPS.map(trip => {
     const cover = trip.cover
-      ? `<div class="trip-cover-wrap"><img src="${esc(trip.cover)}" alt="" loading="lazy"></div>`
+      ? `<div class="trip-cover-wrap"><img src="${esc(trip.cover)}" alt="" loading="lazy"${trip.coverPosition ? ` style="object-position: ${esc(trip.coverPosition)}"` : ''}></div>`
       : `<div class="cover-soon" data-cover-folder="${esc(trip.days[0].folder)}" data-cover-kind="card">${ICON.waves}<p class="ghost" aria-hidden="true">${esc(trip.en)}</p><span class="soon-tag">照片即將上傳</span></div>`;
     return `<a class="trip-card" href="#/${trip.id}">${cover}<div class="trip-card-body"><span class="trip-no">No. ${pad(trip.no)}</span>
       <p class="trip-meta">${esc([trip.dates, trip.length].filter(Boolean).join(' · '))}</p><h3>${esc(trip.name)}</h3>
@@ -196,7 +197,7 @@ function pageHome() {
     <section class="wrap trips" aria-labelledby="trips-title"><div class="trips-head"><h2 id="trips-title">旅程</h2><p>${TRIPS.length} 趟旅程 · 一天一頁</p></div><div class="trip-grid">${cards}</div>${credits}</section>`;
 }
 
-// Home hero: crossfade between trips every 6s; pauses while hovered or focused.
+// Home hero: crossfade between trips every 4s; pauses while hovered or focused.
 const carousel = { timer: null, index: 0 };
 
 function showSlide(root, k) {
@@ -220,7 +221,7 @@ function startCarousel() {
   root.addEventListener('focusout', () => { hovered = false; });
   carousel.timer = setInterval(() => {
     if (!hovered && !document.hidden) showSlide(root, carousel.index + 1);
-  }, 6000);
+  }, 4000);
 }
 
 function stopCarousel() {

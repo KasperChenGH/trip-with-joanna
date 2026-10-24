@@ -4,7 +4,7 @@
 // `cover` is the photo of the day's main event, shown on its card in the trip overview.
 // Itinerary text supports [label](https://link).
 // `captions` { path: text } gives folder photos a Chinese caption when their file name is English.
-// `cover` is the trip banner (landscape, 2560px). A cover that isn't our own photo needs `coverCredit` { text, href }.
+// `cover` is the trip banner (landscape, 2560px). A cover that isn't our own photo needs `coverCredit` { text, href }; `coverPosition` (CSS object-position) adjusts its crop.
 window.TRIPS = [
   {
     "id": "australia",
@@ -31,6 +31,7 @@ window.TRIPS = [
       "Pictures/Australia/Day7/scenic-railway.jpg": "景觀鐵道",
       "Pictures/Australia/Schedule/australia-itinerary.jpg": "行程總覽"
     },
+    "coverPosition": "center 25%",
     "days": [
       {
         "date": "12月23–24日",
@@ -732,15 +733,16 @@ window.TRIPS = [
     "country": "日本",
     "dates": "9月25日 – 9月30日",
     "route": "中部機場 → 美濃 → 下呂溫泉合掌村 → 飛驒高山 → 上高地 → 名古屋",
-    "cover": "Pictures/Nagoya/cover-gero-gassho-mura.jpg",
+    "cover": "Pictures/Nagoya/cover-kamikochi.jpg",
     "coverCredit": {
-      "text": "下呂溫泉合掌村 · 先従隗始 · CC0",
-      "href": "https://commons.wikimedia.org/wiki/File:Gero_Onsen_Gassho-mura_20230715_10.jpg"
+      "text": "上高地 河童橋 · くろふね · CC BY-SA 4.0",
+      "href": "https://commons.wikimedia.org/wiki/File:上高地_07.jpg"
     },
     "captions": {
       "Pictures/Nagoya/Schedule/nagoya-itinerary.jpg": "行程總覽",
       "Pictures/Nagoya/Schedule/岐阜飛驒高山上高地名古屋_六天五夜行程手冊_含葷素餐廳版.pdf": "完整行程手冊（含葷素餐廳）"
     },
+    "coverPosition": "center 35%",
     "days": [
       {
         "date": "9月25日",
