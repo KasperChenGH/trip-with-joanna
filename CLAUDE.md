@@ -82,6 +82,9 @@ python -m http.server 8765    # then open http://localhost:8765/
 
 ## Checks before pushing
 
+Bump the `?v=N` on the style.css / trips.js / script.js links in index.html whenever any of them changes — GitHub Pages lets browsers cache files for 10 minutes, so without it visitors keep the old version.
+
+
 ```sh
 node -e "new Function(require('fs').readFileSync('script.js','utf8'))"   # JS syntax
 grep -oE "Pictures/[^\"]+\.[a-z]+" trips.js | sort -u | while read -r f; do [ -e "$f" ] || echo "MISSING $f"; done
