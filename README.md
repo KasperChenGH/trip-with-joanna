@@ -1,9 +1,10 @@
 # Trip with Joanna
-Kasper & Joanna's trips: Australia (Melbourne & Sydney), ®R√∑ Okinawa, ¶W•j´Œ Nagoya.
+Kasper & Joanna's trips: Australia (Melbourne & Sydney), Ê≤ñÁπ© Okinawa, ÂêçÂè§Â±ã Nagoya.
 
 Live site: https://kasperchengh.github.io/trip-with-joanna/
 
 ## Adding photos
-Drop photos into `Pictures/Okinawa` or `Pictures/Nagoya`, then commit and push.
+Drop photos into the right day folder (`Pictures/Okinawa/Day1` ‚Ä¶ `Day5`, `Pictures/Nagoya/Day1` ‚Ä¶ `Day6`)
+and the itinerary (images or PDF) into `Pictures/<Trip>/Schedule`, then commit and push.
 They appear on the site automatically, sorted by file name (e.g. `01 Shurijo Castle.jpg`);
 the file name without the extension becomes the caption.

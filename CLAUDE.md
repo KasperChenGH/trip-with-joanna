@@ -21,15 +21,19 @@ Pictures/
     Melbourne/        Photos used in the Melbourne itinerary
     Sydney/           Photos used in the Sydney itinerary (+ a few not on the page yet)
     Tickets/          Flight tickets and booking screenshots
-  Okinawa/            沖繩 gallery — auto-loaded, just drop photos in
-  Nagoya/             名古屋 gallery — auto-loaded, just drop photos in
+  Okinawa/            沖繩 — 5-day trip, auto-loaded, just drop files in
+    Schedule/         Itinerary from the user: images shown inline, PDFs as links
+    Day1/ … Day5/     Photos for each day (each day has different content)
+  Nagoya/             名古屋 — 6-day trip, same layout
+    Schedule/
+    Day1/ … Day6/
 ```
 
 ## How the site works
 
 - **Routing:** URL hash selects the view: `#/`, `#/australia/melbourne`, `#/australia/sydney`, `#/okinawa`, `#/nagoya`. Valid views are listed in `VIEWS` in `script.js`; each is a `<section class="view" id="...">` in `index.html`.
 - **Australia:** one trip with a Melbourne | Sydney switch. Content is hand-written in `index.html`: each day is `<article class="day">` with `.day-label` ("Day N · Mon DD"), `<h3>`, and an `<ol class="timeline">` of `<li><time>…</time> text <figure>…</figure></li>`. Day chips are generated from `.day-label` automatically. Images are referenced by path, so moving/renaming files in `Pictures/Australia/` requires updating `index.html`.
-- **Japan galleries:** `.gallery[data-folder]` lists images via `https://api.github.com/repos/KasperChenGH/trip-with-joanna/contents/<folder>` — photos appear only after being pushed. Sorted by file name; the caption is the file name without extension and without a leading number (`03 首里城.jpg` → "首里城"). The first photo is the trip's home-page cover. Supported: jpg, jpeg, png, gif, webp, avif (not HEIC).
+- **Japan trips:** `.trip-days[data-folder][data-days]` is expanded by `buildTripDays()` into a Schedule section plus one `.gallery` per `DayN` folder. Galleries read the repo file list from one GitHub API call (`git/trees/main?recursive=1`), so files appear only after being pushed. Sorted by file name; the caption is the file name without extension and without a leading number (`03 首里城.jpg` → "首里城"). Schedule also lists PDFs as links. The first photo in `Day1/` is the trip's home-page cover. Supported images: jpg, jpeg, png, gif, webp, avif (not HEIC). To change the number of days, edit `data-days` in `index.html` and add/remove `DayN` folders.
 - **Lightbox:** clicking any `figure img` inside `<main>` opens the `<dialog class="lightbox">`.
 
 ## Conventions
@@ -45,8 +49,8 @@ Pictures/
 
 ## Adding a trip
 
-1. Create `Pictures/<Trip>/` with a `.gitkeep`.
-2. In `index.html`: add a header nav link, a home `trip-card`, and a `<section class="view" id="<trip>">` (copy the Okinawa pattern).
+1. Create `Pictures/<Trip>/Schedule/` and `Pictures/<Trip>/Day1/ … DayN/`, each with a `.gitkeep`.
+2. In `index.html`: add a header nav link, a home `trip-card` (cover `data-cover="Pictures/<Trip>/Day1"`), and a `<section class="view" id="<trip>">` with `<div class="trip-days" data-folder="Pictures/<Trip>" data-days="N">` (copy the Okinawa pattern).
 3. Add the id to `VIEWS` in `script.js`.
 
 ## Subagents (`.claude/agents/`)

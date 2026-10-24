@@ -5,7 +5,8 @@ const VIEWS = ['home', 'australia', 'okinawa', 'nagoya'];
 // so new photos show up after they are pushed — no HTML edits needed.
 const GITHUB_REPO = 'KasperChenGH/trip-with-joanna';
 const IMAGE_EXTENSIONS = /\.(jpe?g|png|gif|webp|avif)$/i;
-const photoRequests = {};
+const DOCUMENT_EXTENSIONS = /\.pdf$/i;
+let repoFiles;
 
 function route() {
   const [view, sub] = location.hash.replace(/^#\/?/, '').split('/');
@@ -27,6 +28,7 @@ function route() {
   }
 
   const section = document.getElementById(current);
+  section.querySelectorAll('.trip-days').forEach(buildTripDays);
   section.querySelectorAll('.gallery').forEach(loadGallery);
   window.scrollTo(0, 0);
 }
@@ -72,40 +74,91 @@ function buildDayChips(city) {
   days.forEach(day => dayObserver.observe(day));
 }
 
-function listPhotos(folder) {
-  if (!photoRequests[folder]) {
-    photoRequests[folder] = fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${folder}`)
+// One request for the whole repo's file list, shared by every gallery on the page.
+function listRepoFiles() {
+  if (!repoFiles) {
+    repoFiles = fetch(`https://api.github.com/repos/${GITHUB_REPO}/git/trees/main?recursive=1`)
       .then(response => {
-        if (response.status === 404) return [];
         if (!response.ok) throw new Error(response.statusText);
         return response.json();
       })
-      .then(files => files
-        .filter(file => file.type === 'file' && IMAGE_EXTENSIONS.test(file.name))
-        .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }))
-        .map(file => ({
-          src: `${folder}/${encodeURIComponent(file.name)}`,
-          // "03 Shurijo Castle.jpg" -> "Shurijo Castle"
-          caption: file.name.replace(/\.[^.]+$/, '').replace(/^\d+[\s_.-]*/, ''),
-        })))
+      .then(data => data.tree.filter(item => item.type === 'blob').map(item => item.path))
       .catch(error => {
-        delete photoRequests[folder];
+        repoFiles = null;
         throw error;
       });
   }
-  return photoRequests[folder];
+  return repoFiles;
+}
+
+// Files directly inside `folder` matching `pattern`, sorted by name.
+function listFiles(folder, pattern) {
+  return listRepoFiles().then(paths => paths
+    .filter(path => path.startsWith(`${folder}/`) && !path.slice(folder.length + 1).includes('/'))
+    .map(path => path.slice(folder.length + 1))
+    .filter(name => pattern.test(name))
+    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+    .map(name => ({
+      src: `${folder}/${encodeURIComponent(name)}`,
+      // "03 Shurijo Castle.jpg" -> "Shurijo Castle"
+      caption: name.replace(/\.[^.]+$/, '').replace(/^\d+[\s_.-]*/, ''),
+    })));
+}
+
+function listPhotos(folder) {
+  return listFiles(folder, IMAGE_EXTENSIONS);
+}
+
+// Japan trips: a Schedule section, then one gallery per day folder (Day1, Day2, ...).
+function buildTripDays(container) {
+  if (container.dataset.built) return;
+  container.dataset.built = 'true';
+
+  const folder = container.dataset.folder;
+  const sections = [{ id: 'Schedule', title: '🗓️ 行程 Schedule', schedule: true }];
+  for (let day = 1; day <= Number(container.dataset.days); day++) {
+    sections.push({ id: `Day${day}`, title: `Day ${day}` });
+  }
+
+  sections.forEach(({ id, title, schedule }) => {
+    const section = document.createElement('section');
+    section.className = 'trip-day';
+    const heading = document.createElement('h2');
+    heading.textContent = title;
+    const gallery = document.createElement('div');
+    gallery.className = 'gallery';
+    gallery.dataset.folder = `${folder}/${id}`;
+    if (schedule) gallery.dataset.schedule = 'true';
+    section.append(heading, gallery);
+    container.append(section);
+  });
 }
 
 function loadGallery(gallery) {
   if (gallery.dataset.loaded) return;
   gallery.dataset.loaded = 'true';
 
-  listPhotos(gallery.dataset.folder)
-    .then(photos => {
-      if (photos.length === 0) {
-        gallery.innerHTML = '<p class="gallery-empty">Photos coming soon 📷</p>';
+  const isSchedule = gallery.dataset.schedule === 'true';
+  Promise.all([
+    listPhotos(gallery.dataset.folder),
+    isSchedule ? listFiles(gallery.dataset.folder, DOCUMENT_EXTENSIONS) : [],
+  ])
+    .then(([photos, documents]) => {
+      if (photos.length === 0 && documents.length === 0) {
+        gallery.innerHTML = isSchedule
+          ? '<p class="gallery-empty">Schedule coming soon 🗓️</p>'
+          : '<p class="gallery-empty">Photos coming soon 📷</p>';
         return;
       }
+      documents.forEach(doc => {
+        const link = document.createElement('a');
+        link.className = 'document-link';
+        link.href = doc.src;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.textContent = `📄 ${doc.caption}`;
+        gallery.append(link);
+      });
       photos.forEach(photo => {
         const figure = document.createElement('figure');
         const img = document.createElement('img');

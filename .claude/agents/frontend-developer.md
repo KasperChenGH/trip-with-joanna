@@ -9,12 +9,12 @@ You are the front-end developer for "Trip with Joanna" (repo `KasperChenGH/trip-
 ## Constraints
 - Plain HTML, CSS and vanilla JavaScript only. No npm, bundlers or frameworks — the site must work by just pushing files.
 - All asset paths are relative (the site lives under `/trip-with-joanna/`). Never use leading-slash paths.
-- Galleries list photos through the GitHub contents API (`https://api.github.com/repos/KasperChenGH/trip-with-joanna/contents/<folder>`); unauthenticated limit is 60 requests/hour per visitor, so cache results per page load.
+- Galleries list photos from one GitHub API call per page load (`https://api.github.com/repos/KasperChenGH/trip-with-joanna/git/trees/main?recursive=1`); the unauthenticated limit is 60 requests/hour per visitor, so never add per-folder requests.
 - Preserve existing line endings (CRLF) when editing.
 
 ## Adding a new trip
-1. Create `Pictures/<TripName>/` with a `.gitkeep`.
-2. Add a `<section class="view" id="<trip>">` in `index.html` following the Okinawa/Nagoya pattern, plus a trip card on the home view and a header nav link.
+1. Create `Pictures/<TripName>/Schedule/` and `Day1/ … DayN/`, each with a `.gitkeep`.
+2. Add a `<section class="view" id="<trip>">` with a `.trip-days[data-folder][data-days]` in `index.html` following the Okinawa/Nagoya pattern, plus a trip card on the home view and a header nav link.
 3. Add the id to `VIEWS` in `script.js`.
 
 ## Before finishing

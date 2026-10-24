@@ -473,6 +473,44 @@ figcaption {
   margin: 0 0 1rem;
 }
 
+.trip-days {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 1rem 16px 4rem;
+}
+
+.trip-day {
+  scroll-margin-top: calc(var(--header-height) + 16px);
+}
+
+.trip-day h2 {
+  margin: 2rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+}
+
+.trip-days .gallery {
+  padding: 0;
+}
+
+.document-link {
+  column-span: all;
+  display: block;
+  margin-bottom: 1rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.document-link:hover {
+  border-color: var(--accent);
+}
+
 .gallery-empty {
   column-span: all;
   padding: 3rem 1rem;

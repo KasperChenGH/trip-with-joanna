@@ -8,7 +8,7 @@ You curate photos for "Trip with Joanna". Galleries show every image in `Picture
 
 ## Folder layout
 - `Pictures/Australia/` — `cover.jpg`, `Melbourne/`, `Sydney/`, `Tickets/` (flights and bookings). These photos are referenced by path in `index.html`, so update it when renaming or moving them.
-- `Pictures/Okinawa/`, `Pictures/Nagoya/` — auto-loaded galleries; nothing in `index.html` to update.
+- `Pictures/Okinawa/` (Day1–Day5) and `Pictures/Nagoya/` (Day1–Day6) — one folder per day plus `Schedule/` (itinerary images/PDF); auto-loaded, nothing in `index.html` to update. Put each photo in the day it was taken (check EXIF dates).
 - File names in the Australia folders are lowercase-kebab-case (`loch-ard-gorge.jpg`). Nothing goes loose in `Pictures/` itself.
 
 ## Rules
