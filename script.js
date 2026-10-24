@@ -123,9 +123,9 @@ function listPhotos(folder) {
 
 // ---------- shared pieces ----------
 
-// The whole photo inside a fixed frame, over a blurred copy of itself (same file, so no extra download).
+// Square thumbnail cropped toward the top (where faces usually are); the lightbox shows the whole photo.
 function framedPhoto(src, alt, attrs) {
-  return `<div class="ph"><img class="ph-bg" src="${esc(src)}" alt="" aria-hidden="true" loading="lazy" decoding="async"><img src="${esc(src)}" alt="${esc(alt)}" loading="lazy" decoding="async"${attrs || ''}></div>`;
+  return `<div class="ph"><img src="${esc(src)}" alt="${esc(alt)}" loading="lazy" decoding="async"${attrs || ''}></div>`;
 }
 
 // Rows of 3; the last row never holds a single photo: 1 → half, 2 → halves, 4 → 2 + 2, 7 → 3 + 2 + 2.
@@ -495,17 +495,17 @@ function setUpLightbox() {
     count.textContent = `${index + 1} / ${photos.length}`;
   };
   const open = img => {
-    photos = [...main.querySelectorAll('figure img:not(.ph-bg), .sched-shot')];
+    photos = [...main.querySelectorAll('figure img, .sched-shot')];
     show(photos.indexOf(img));
     lightbox.showModal();
   };
 
   main.addEventListener('click', event => {
-    const img = event.target.closest('figure img:not(.ph-bg), .sched-shot');
+    const img = event.target.closest('figure img, .sched-shot');
     if (img) open(img);
   });
   main.addEventListener('keydown', event => {
-    const img = event.target.closest('figure img:not(.ph-bg), .sched-shot');
+    const img = event.target.closest('figure img, .sched-shot');
     if (img && (event.key === 'Enter' || event.key === ' ')) {
       event.preventDefault();
       open(img);
