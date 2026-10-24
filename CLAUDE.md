@@ -24,7 +24,7 @@ Pictures/
     Schedule/         australia-itinerary.jpg (drawn by tools/itinerary_poster.py)
     Day1/ … Day11/    Photos for each day
     Unsorted/         Photos whose day is unknown — not shown on the site
-  Okinawa/            沖繩 — 5 days, photos auto-loaded, just drop files in
+  Okinawa/            沖繩 — 5 days (2026-04-07 – 04-11, dates from the user), photos auto-loaded
     Schedule/         Itinerary from the user: images shown inline, PDFs as links
     Day1/ … Day5/
   Nagoya/             名古屋 — 6 days, same layout

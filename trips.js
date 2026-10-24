@@ -604,8 +604,10 @@ window.TRIPS = [
     "captions": {
       "Pictures/Okinawa/Schedule/okinawa.png": "行程總覽"
     },
+    "dates": "4月7日 – 4月11日",
     "days": [
       {
+        "date": "4月7日",
         "title": "✈️ 抵達那霸 · 暖暮拉麵",
         "cover": "Pictures/Okinawa/Day1/LINE_ALBUM_47沖繩day1_261024_12.jpg",
         "timeline": [
@@ -624,6 +626,7 @@ window.TRIPS = [
         ]
       },
       {
+        "date": "4月8日",
         "title": "⛩️ 國際通 · 波上宮",
         "cover": "Pictures/Okinawa/Day2/LINE_ALBUM_48沖繩day2_261024_55.jpg",
         "timeline": [
@@ -650,6 +653,7 @@ window.TRIPS = [
         ]
       },
       {
+        "date": "4月9日",
         "title": "🌅 瀨長島夕陽",
         "cover": "Pictures/Okinawa/Day3/LINE_ALBUM_49沖繩day3_261024_33.jpg",
         "timeline": [
@@ -676,6 +680,7 @@ window.TRIPS = [
         ]
       },
       {
+        "date": "4月10日",
         "title": "🤿 青之洞窟 · 古宇利島",
         "cover": "Pictures/Okinawa/Day4/LINE_ALBUM_410沖繩day4_261024_49.jpg",
         "timeline": [
@@ -706,6 +711,7 @@ window.TRIPS = [
         ]
       },
       {
+        "date": "4月11日",
         "title": "🍔 美國村 · A&W",
         "cover": "Pictures/Okinawa/Day5/LINE_ALBUM_411沖繩day5_261024_11.jpg",
         "timeline": [
