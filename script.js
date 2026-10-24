@@ -153,9 +153,15 @@ function emptyState(title, hint, path) {
   return `<div class="empty"><div class="empty-icon">${ICON.cam}</div><h3>${title}</h3><p>${hint}</p>${path ? `<p><code>${esc(path)}</code></p>` : ''}</div>`;
 }
 
+// Licensed cover photos (CC BY) must show who took them.
+function photoCredit(trip) {
+  const credit = trip.coverCredit;
+  return credit ? `<a class="photo-credit" href="${esc(credit.href)}" target="_blank" rel="noopener">Photo: ${esc(credit.text)}</a>` : '';
+}
+
 // A cover area that shows the trip photo, or a teal gradient until the first photo of Day 1 is pushed.
 function coverBackground(trip) {
-  if (trip.cover) return { cls: '', html: `<img src="${esc(trip.cover)}" alt="" fetchpriority="high">`, attr: '' };
+  if (trip.cover) return { cls: '', html: `<img src="${esc(trip.cover)}" alt="" fetchpriority="high">${photoCredit(trip)}`, attr: '' };
   return { cls: ' gradient', html: ICON.waves + `<p class="ghost" aria-hidden="true">${esc(trip.en)}</p>`, attr: ` data-cover-folder="${esc(trip.days[0].folder)}"` };
 }
 
@@ -178,11 +184,15 @@ function pageHome() {
       <p class="where">${esc(trip.cities.length ? trip.cities.join(' · ') : trip.country)}</p><span class="go">${trip.days.length} days, one page each <span aria-hidden="true">→</span></span></div></a>`;
   }).join('');
   const countries = new Set(TRIPS.map(trip => trip.country)).size;
+  const credited = TRIPS.filter(trip => trip.coverCredit);
+  const credits = credited.length
+    ? `<p class="credits">Cover photos via Wikimedia Commons: ${credited.map(trip => `<a href="${esc(trip.coverCredit.href)}" target="_blank" rel="noopener">${esc(trip.coverCredit.text)}</a>`).join(' · ')}</p>`
+    : '';
   return `<section class="wrap masthead"><div><p class="eyebrow">Kasper &amp; Joanna · Travel journal</p><h1 id="page-h" tabindex="-1">我們的旅行回憶</h1><p class="lead display-it">Every trip we take together, one day at a time.</p></div>
     <ul class="stats" aria-label="At a glance"><li><b>${pad(TRIPS.length)}</b>trips · 旅程</li><li><b>${pad(countries)}</b>countries · 國家</li></ul></section>
     <section class="carousel on-dark" aria-roledescription="carousel" aria-label="Our trips" id="carousel"><div class="slides">${slides}</div>
     </section>
-    <section class="wrap trips" aria-labelledby="trips-title"><div class="trips-head"><h2 id="trips-title">旅程<span class="display-it">Trips</span></h2><p>${TRIPS.length} trips · one page per day</p></div><div class="trip-grid">${cards}</div></section>`;
+    <section class="wrap trips" aria-labelledby="trips-title"><div class="trips-head"><h2 id="trips-title">旅程<span class="display-it">Trips</span></h2><p>${TRIPS.length} trips · one page per day</p></div><div class="trip-grid">${cards}</div>${credits}</section>`;
 }
 
 // Home hero: crossfade between trips every 6s; pauses while hovered or focused.

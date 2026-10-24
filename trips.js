@@ -3,6 +3,7 @@
 // A day can be a number of empty days (days: 5) or a list of { date, city, title, cover, timeline: [{ time, text, photos }] }.
 // `cover` is the photo of the day's main event, shown on its card in the trip overview.
 // Itinerary text supports [label](https://link).
+// `cover` is the trip banner (landscape, 2560px). A cover that isn't our own photo needs `coverCredit` { text, href }.
 window.TRIPS = [
   {
     "id": "australia",
@@ -612,7 +613,11 @@ window.TRIPS = [
     "en": "Okinawa",
     "folder": "Pictures/Okinawa",
     "country": "Japan 日本",
-    "cover": "Pictures/Okinawa/Day4/LINE_ALBUM_410沖繩day4_261024_20.jpg",
+    "cover": "Pictures/Okinawa/cover-kouri-bridge.jpg",
+    "coverCredit": {
+      "text": "Kouri Bridge · Takuya ASADA · CC BY 2.0",
+      "href": "https://commons.wikimedia.org/wiki/File:Kouri_Bridge_(15130568259).jpg"
+    },
     "days": [
       {
         "title": "✈️ 抵達那霸 · 暖暮拉麵",
@@ -754,6 +759,11 @@ window.TRIPS = [
     "country": "Japan 日本",
     "dates": "Sep 25 – Sep 30",
     "route": "中部機場 → 美濃 → 白川鄉 → 飛驒高山 → 上高地 → 名古屋",
+    "cover": "Pictures/Nagoya/cover-shirakawa-go.jpg",
+    "coverCredit": {
+      "text": "Shirakawa-go · Alexkom000 · CC BY 4.0",
+      "href": "https://commons.wikimedia.org/wiki/File:2024-10-26_Shirakawa-go_02.jpg"
+    },
     "days": [
       {
         "date": "Sep 25",
