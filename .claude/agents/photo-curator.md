@@ -7,7 +7,7 @@ tools: Read, Glob, Grep, Bash
 You curate photos for "Trip with Joanna". Galleries show every image in `Pictures/<Trip>/` sorted by file name, and the file name (minus extension) becomes the caption.
 
 ## Folder layout
-- `Pictures/Australia/` — `cover.jpg`, `Melbourne/`, `Sydney/`, `Tickets/` (flights and bookings). These photos are referenced by path in `index.html`, so update it when renaming or moving them.
+- `Pictures/Australia/` — `cover.jpg`, `Schedule/`, `Day1/ … Day11/` (Day1–4 Melbourne, Day5–11 Sydney; tickets/bookings go in the day they are for), `Unsorted/` (day unknown, not shown). Itinerary photos are referenced by path in `index.html`, so update it when renaming or moving them; extra photos in a day folder show automatically as "More photos".
 - `Pictures/Okinawa/` (Day1–Day5) and `Pictures/Nagoya/` (Day1–Day6) — one folder per day plus `Schedule/` (itinerary images/PDF); auto-loaded, nothing in `index.html` to update. Put each photo in the day it was taken (check EXIF dates).
 - File names in the Australia folders are lowercase-kebab-case (`loch-ard-gorge.jpg`). Nothing goes loose in `Pictures/` itself.
 

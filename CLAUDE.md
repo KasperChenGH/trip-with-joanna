@@ -16,11 +16,11 @@ README.md             Short public description + how to add photos
 CLAUDE.md             This file
 .claude/agents/       Project subagents (see below)
 Pictures/
-  Australia/
+  Australia/          澳洲 — 11-day trip (Day1–4 Melbourne, Day5–11 Sydney)
     cover.jpg         Home card + Australia hero image
-    Melbourne/        Photos used in the Melbourne itinerary
-    Sydney/           Photos used in the Sydney itinerary (+ a few not on the page yet)
-    Tickets/          Flight tickets and booking screenshots
+    Schedule/         Flight itinerary / fare screenshots (shown under References & Tickets)
+    Day1/ … Day11/    Photos, tickets and bookings for each day of the itinerary
+    Unsorted/         Photos whose day is unknown — not shown on the site
   Okinawa/            沖繩 — 5-day trip, auto-loaded, just drop files in
     Schedule/         Itinerary from the user: images shown inline, PDFs as links
     Day1/ … Day5/     Photos for each day (each day has different content)
@@ -32,7 +32,7 @@ Pictures/
 ## How the site works
 
 - **Routing:** URL hash selects the view: `#/`, `#/australia/melbourne`, `#/australia/sydney`, `#/okinawa`, `#/nagoya`. Valid views are listed in `VIEWS` in `script.js`; each is a `<section class="view" id="...">` in `index.html`.
-- **Australia:** one trip with a Melbourne | Sydney switch. Content is hand-written in `index.html`: each day is `<article class="day">` with `.day-label` ("Day N · Mon DD"), `<h3>`, and an `<ol class="timeline">` of `<li><time>…</time> text <figure>…</figure></li>`. Day chips are generated from `.day-label` automatically. Images are referenced by path, so moving/renaming files in `Pictures/Australia/` requires updating `index.html`.
+- **Australia:** one trip with a Melbourne | Sydney switch. Content is hand-written in `index.html`: each day is `<article class="day">` with `.day-label` ("Day N · Mon DD"), `<h3>`, and an `<ol class="timeline">` of `<li><time>…</time> text <figure>…</figure></li>`. Day chips are generated from `.day-label` automatically. Each `.day` has `data-folder="Pictures/Australia/DayN"`; the itinerary references images by path (so moving/renaming them requires updating `index.html`), and any other photo in that folder is auto-appended under the day as "More photos".
 - **Japan trips:** `.trip-days[data-folder][data-days]` is expanded by `buildTripDays()` into a Schedule section plus one `.gallery` per `DayN` folder. Galleries read the repo file list from one GitHub API call (`git/trees/main?recursive=1`), so files appear only after being pushed. Sorted by file name; the caption is the file name without extension and without a leading number (`03 首里城.jpg` → "首里城"). Schedule also lists PDFs as links. The first photo in `Day1/` is the trip's home-page cover. Supported images: jpg, jpeg, png, gif, webp, avif (not HEIC). To change the number of days, edit `data-days` in `index.html` and add/remove `DayN` folders.
 - **Lightbox:** clicking any `figure img` inside `<main>` opens the `<dialog class="lightbox">`.
 
@@ -40,7 +40,7 @@ Pictures/
 
 - Plain HTML/CSS/vanilla JS. No build step, npm, or frameworks.
 - Relative asset paths only (site lives under `/trip-with-joanna/`). GitHub Pages paths are case-sensitive.
-- Australia image names are lowercase-kebab-case; nothing loose in `Pictures/` root.
+- Every trip uses the same layout: `Pictures/<Trip>/Schedule/` + `Day1/ … DayN/`. Australia image names are lowercase-kebab-case (shown as captions with spaces); nothing loose in `Pictures/` root.
 - Content mixes Traditional Chinese and English; fonts are Noto Serif TC (headings) / Noto Sans TC (body).
 - Itinerary times use 12-hour format (8:30 AM).
 - Reuse CSS tokens (`--accent`, `--ink`, `--muted`, `--line`, …) instead of hard-coded colors.

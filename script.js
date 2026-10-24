@@ -40,7 +40,48 @@ function showCity(city) {
   document.querySelectorAll('.city-switch a').forEach(tab => {
     tab.setAttribute('aria-selected', tab.dataset.city === city);
   });
-  buildDayChips(document.getElementById(`city-${city}`));
+  const cityBlock = document.getElementById(`city-${city}`);
+  buildDayChips(cityBlock);
+  cityBlock.querySelectorAll('.day[data-folder]').forEach(loadMorePhotos);
+}
+
+// Photos dropped into a day's folder that the itinerary doesn't show yet
+// appear under that day as "More photos".
+function loadMorePhotos(day) {
+  if (day.dataset.loaded) return;
+  day.dataset.loaded = 'true';
+
+  const shown = new Set([...day.querySelectorAll('img')].map(img => img.getAttribute('src')));
+  listPhotos(day.dataset.folder)
+    .then(photos => {
+      const extra = photos.filter(photo => !shown.has(decodeURIComponent(photo.src)));
+      if (extra.length === 0) return;
+      const heading = document.createElement('p');
+      heading.className = 'more-photos-label';
+      heading.textContent = 'More photos';
+      const row = document.createElement('div');
+      row.className = 'photo-row';
+      extra.forEach(photo => row.append(createFigure(photo)));
+      day.append(heading, row);
+    })
+    .catch(() => {
+      day.dataset.loaded = '';
+    });
+}
+
+function createFigure(photo) {
+  const figure = document.createElement('figure');
+  const img = document.createElement('img');
+  img.src = photo.src;
+  img.alt = photo.caption;
+  img.loading = 'lazy';
+  figure.append(img);
+  if (photo.caption) {
+    const caption = document.createElement('figcaption');
+    caption.textContent = photo.caption;
+    figure.append(caption);
+  }
+  return figure;
 }
 
 // One chip per day; clicking scrolls to it, scrolling highlights it.
@@ -100,8 +141,8 @@ function listFiles(folder, pattern) {
     .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
     .map(name => ({
       src: `${folder}/${encodeURIComponent(name)}`,
-      // "03 Shurijo Castle.jpg" -> "Shurijo Castle"
-      caption: name.replace(/\.[^.]+$/, '').replace(/^\d+[\s_.-]*/, ''),
+      // "03 Shurijo Castle.jpg" -> "Shurijo Castle", "maritime-museum.jpg" -> "maritime museum"
+      caption: name.replace(/\.[^.]+$/, '').replace(/^\d+[\s_.-]*/, '').replace(/[-_]+/g, ' '),
     })));
 }
 
@@ -159,20 +200,7 @@ function loadGallery(gallery) {
         link.textContent = `📄 ${doc.caption}`;
         gallery.append(link);
       });
-      photos.forEach(photo => {
-        const figure = document.createElement('figure');
-        const img = document.createElement('img');
-        img.src = photo.src;
-        img.alt = photo.caption;
-        img.loading = 'lazy';
-        figure.append(img);
-        if (photo.caption) {
-          const caption = document.createElement('figcaption');
-          caption.textContent = photo.caption;
-          figure.append(caption);
-        }
-        gallery.append(figure);
-      });
+      photos.forEach(photo => gallery.append(createFigure(photo)));
     })
     .catch(() => {
       gallery.dataset.loaded = '';
