@@ -1,139 +1,167 @@
-function showDay(dayId) {
-  // Hide main image
-  const mainImage = document.querySelector('.picture');
-  if (mainImage) {
-    mainImage.style.display = 'none';
-  }
+// Views are switched with the URL hash: #/, #/australia/melbourne, #/australia/sydney, #/okinawa, #/nagoya
+const VIEWS = ['home', 'australia', 'okinawa', 'nagoya'];
 
-  // Hide all day-content sections
-  const sections = document.querySelectorAll('.day-content');
-  sections.forEach(section => {
-    section.classList.remove('active');
-    section.style.display = 'none';
-  });
-
-  // Show selected section
-  const selected = document.getElementById(dayId);
-  if (selected) {
-    selected.classList.add('active');
-    selected.style.display = 'block';
-  }
-
-  // Handle sidebars
-  const sidebarMelbourne = document.getElementById('sidebar-melbourne');
-  const sidebarSydney = document.getElementById('sidebar-sydney');
-
-  if (sidebarMelbourne) {
-    sidebarMelbourne.style.display = dayId === 'Melbourne' ? 'block' : 'none';
-    sidebarMelbourne.classList.remove('show'); // Ensure hidden initially
-  }
-
-  if (sidebarSydney) {
-    sidebarSydney.style.display = dayId === 'Sydney' ? 'block' : 'none';
-    sidebarSydney.classList.remove('show'); // Ensure hidden initially
-  }
-
-  // Show sidebar toggle button on mobile (only for trips that have a sidebar)
-  const toggleButton = document.getElementById('sidebar-toggle');
-  const hasSidebar = dayId === 'Melbourne' || dayId === 'Sydney';
-  if (toggleButton) {
-    toggleButton.style.display = hasSidebar && window.innerWidth <= 768 ? 'block' : 'none';
-  }
-
-  // Load photo galleries in this section
-  if (selected) {
-    selected.querySelectorAll('.gallery').forEach(loadGallery);
-  }
-}
-
-// Photo galleries: lists every image in the gallery's folder on GitHub,
+// Photo galleries list every image in their folder on GitHub,
 // so new photos show up after they are pushed — no HTML edits needed.
 const GITHUB_REPO = 'KasperChenGH/trip-with-joanna';
 const IMAGE_EXTENSIONS = /\.(jpe?g|png|gif|webp|avif)$/i;
+const photoRequests = {};
+
+function route() {
+  const [view, sub] = location.hash.replace(/^#\/?/, '').split('/');
+  const current = VIEWS.includes(view) ? view : 'home';
+
+  document.querySelectorAll('.view').forEach(section => {
+    section.hidden = section.id !== current;
+  });
+  document.querySelectorAll('.site-nav a').forEach(link => {
+    if (link.dataset.view === current) {
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.removeAttribute('aria-current');
+    }
+  });
+
+  if (current === 'australia') {
+    showCity(sub === 'sydney' ? 'sydney' : 'melbourne');
+  }
+
+  const section = document.getElementById(current);
+  section.querySelectorAll('.gallery').forEach(loadGallery);
+  window.scrollTo(0, 0);
+}
+
+function showCity(city) {
+  document.querySelectorAll('#australia .city').forEach(block => {
+    block.hidden = block.dataset.city !== city;
+  });
+  document.querySelectorAll('.city-switch a').forEach(tab => {
+    tab.setAttribute('aria-selected', tab.dataset.city === city);
+  });
+  buildDayChips(document.getElementById(`city-${city}`));
+}
+
+// One chip per day; clicking scrolls to it, scrolling highlights it.
+let dayObserver;
+
+function buildDayChips(city) {
+  const chips = document.querySelector('.day-chips');
+  chips.innerHTML = '';
+  if (dayObserver) dayObserver.disconnect();
+
+  const days = city.querySelectorAll('.day');
+  days.forEach(day => {
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.textContent = day.querySelector('.day-label').textContent.split(' · ')[0];
+    chip.dataset.target = day.id;
+    chip.addEventListener('click', () => day.scrollIntoView());
+    chips.append(chip);
+  });
+
+  dayObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      chips.querySelectorAll('button').forEach(chip => {
+        const active = chip.dataset.target === entry.target.id;
+        chip.classList.toggle('active', active);
+        if (active) chip.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      });
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  days.forEach(day => dayObserver.observe(day));
+}
+
+function listPhotos(folder) {
+  if (!photoRequests[folder]) {
+    photoRequests[folder] = fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${folder}`)
+      .then(response => {
+        if (response.status === 404) return [];
+        if (!response.ok) throw new Error(response.statusText);
+        return response.json();
+      })
+      .then(files => files
+        .filter(file => file.type === 'file' && IMAGE_EXTENSIONS.test(file.name))
+        .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }))
+        .map(file => ({
+          src: `${folder}/${encodeURIComponent(file.name)}`,
+          // "03 Shurijo Castle.jpg" -> "Shurijo Castle"
+          caption: file.name.replace(/\.[^.]+$/, '').replace(/^\d+[\s_.-]*/, ''),
+        })))
+      .catch(error => {
+        delete photoRequests[folder];
+        throw error;
+      });
+  }
+  return photoRequests[folder];
+}
 
 function loadGallery(gallery) {
   if (gallery.dataset.loaded) return;
   gallery.dataset.loaded = 'true';
 
-  const folder = gallery.dataset.folder;
-  fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${folder}`)
-    .then(response => response.ok ? response.json() : [])
-    .then(files => {
-      const photos = files
-        .filter(file => file.type === 'file' && IMAGE_EXTENSIONS.test(file.name))
-        .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
-
+  listPhotos(gallery.dataset.folder)
+    .then(photos => {
       if (photos.length === 0) {
-        gallery.innerHTML = '<p style="text-align: center; font-style: italic;">Photos coming soon 📷</p>';
+        gallery.innerHTML = '<p class="gallery-empty">Photos coming soon 📷</p>';
         return;
       }
-
       photos.forEach(photo => {
-        const caption = document.createElement('p');
-        caption.style.textAlign = 'center';
-        caption.style.fontStyle = 'italic';
-        caption.textContent = photo.name.replace(/\.[^.]+$/, '');
-
+        const figure = document.createElement('figure');
         const img = document.createElement('img');
-        img.className = 'image';
+        img.src = photo.src;
+        img.alt = photo.caption;
         img.loading = 'lazy';
-        img.src = `${folder}/${encodeURIComponent(photo.name)}`;
-        img.alt = caption.textContent;
-
-        gallery.append(caption, img);
+        figure.append(img);
+        if (photo.caption) {
+          const caption = document.createElement('figcaption');
+          caption.textContent = photo.caption;
+          figure.append(caption);
+        }
+        gallery.append(figure);
       });
     })
     .catch(() => {
       gallery.dataset.loaded = '';
-      gallery.innerHTML = '<p style="text-align: center; font-style: italic;">Could not load photos right now.</p>';
+      gallery.innerHTML = '<p class="gallery-empty">Could not load photos right now — try again later.</p>';
     });
 }
 
-function goHome() {
-  // Show main image
-  const mainImage = document.querySelector('.picture');
-  if (mainImage) {
-    mainImage.style.display = 'block';
-  }
-
-  // Hide all day content
-  const sections = document.querySelectorAll('.day-content');
-  sections.forEach(section => {
-    section.classList.remove('active');
-    section.style.display = 'none';
-  });
-
-  // Hide both sidebars
-  const sidebarMelbourne = document.getElementById('sidebar-melbourne');
-  const sidebarSydney = document.getElementById('sidebar-sydney');
-  if (sidebarMelbourne) {
-    sidebarMelbourne.style.display = 'none';
-    sidebarMelbourne.classList.remove('show');
-  }
-  if (sidebarSydney) {
-    sidebarSydney.style.display = 'none';
-    sidebarSydney.classList.remove('show');
-  }
-
-  // Hide toggle button
-  const toggleButton = document.getElementById('sidebar-toggle');
-  if (toggleButton) toggleButton.style.display = 'none';
-}
-
-function toggleSidebar() {
-  const sidebarMelbourne = document.getElementById('sidebar-melbourne');
-  const sidebarSydney = document.getElementById('sidebar-sydney');
-
-  [sidebarMelbourne, sidebarSydney].forEach(sidebar => {
-    if (sidebar && sidebar.style.display === 'block') {
-      sidebar.classList.toggle('show');
-    } else if (sidebar) {
-      sidebar.classList.remove('show');
-    }
+// Use the first photo in a trip's folder as its home-page cover.
+function loadCovers() {
+  document.querySelectorAll('[data-cover]').forEach(cover => {
+    listPhotos(cover.dataset.cover)
+      .then(photos => {
+        if (photos.length === 0) return;
+        cover.style.backgroundImage = `url("${photos[0].src}")`;
+        cover.classList.add('has-photo');
+      })
+      .catch(() => {});
   });
 }
 
-// Set initial state when page loads
-window.onload = () => {
-  goHome();
-};
+// Click any photo to see it large.
+function setUpLightbox() {
+  const lightbox = document.querySelector('.lightbox');
+  const image = lightbox.querySelector('img');
+  const caption = lightbox.querySelector('.lightbox-caption');
+
+  document.querySelector('main').addEventListener('click', event => {
+    const img = event.target.closest('figure img');
+    if (!img) return;
+    image.src = img.src;
+    image.alt = img.alt;
+    caption.textContent = img.closest('figure').querySelector('figcaption')?.textContent || '';
+    lightbox.showModal();
+  });
+
+  lightbox.querySelector('.lightbox-close').addEventListener('click', () => lightbox.close());
+  lightbox.addEventListener('click', event => {
+    if (event.target === lightbox) lightbox.close();
+  });
+}
+
+window.addEventListener('hashchange', route);
+setUpLightbox();
+loadCovers();
+route();
