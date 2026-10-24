@@ -745,6 +745,7 @@ window.TRIPS = [
       {
         "date": "9月25日",
         "title": "✈️ 抵達中部機場 → 美濃",
+        "cover": "Pictures/Nagoya/Day1/LINE_ALBUM_925名古屋day1_261025_2.jpg",
         "timeline": [
           {
             "time": "晚上 9:00",
@@ -763,6 +764,7 @@ window.TRIPS = [
       {
         "date": "9月26日",
         "title": "🏡 白川鄉合掌村 · 飛驒高山",
+        "cover": "Pictures/Nagoya/Day2/LINE_ALBUM_926名古屋day2_261025_25.jpg",
         "timeline": [
           {
             "time": "上午 9:30",
@@ -785,6 +787,7 @@ window.TRIPS = [
       {
         "date": "9月27日",
         "title": "🏔️ 上高地一日遊",
+        "cover": "Pictures/Nagoya/Day3/LINE_ALBUM_927名古屋day3_261025_66.jpg",
         "timeline": [
           {
             "time": "全天",
@@ -799,6 +802,7 @@ window.TRIPS = [
       {
         "date": "9月28日",
         "title": "🛍️ 回名古屋 · 榮商圈",
+        "cover": "Pictures/Nagoya/Day4/LINE_ALBUM_928名古屋day4_261025_1.jpg",
         "timeline": [
           {
             "time": "上午",
@@ -821,6 +825,7 @@ window.TRIPS = [
       {
         "date": "9月29日",
         "title": "🚃 名古屋車站商圈",
+        "cover": "Pictures/Nagoya/Day5/LINE_ALBUM_929名古屋day5_261025_1.jpg",
         "timeline": [
           {
             "time": "早餐",
@@ -843,6 +848,7 @@ window.TRIPS = [
       {
         "date": "9月30日",
         "title": "✈️ 賦歸台灣",
+        "cover": "Pictures/Nagoya/Day6/LINE_ALBUM_930名古屋day6_261025_2.jpg",
         "timeline": [
           {
             "time": "中午 12:00",
