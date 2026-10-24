@@ -3,6 +3,7 @@
 // A day can be a number of empty days (days: 5) or a list of { date, city, title, cover, timeline: [{ time, text, photos }] }.
 // `cover` is the photo of the day's main event, shown on its card in the trip overview.
 // Itinerary text supports [label](https://link).
+// `captions` { path: text } gives folder photos a Chinese caption when their file name is English.
 // `cover` is the trip banner (landscape, 2560px). A cover that isn't our own photo needs `coverCredit` { text, href }.
 window.TRIPS = [
   {
@@ -10,115 +11,122 @@ window.TRIPS = [
     "name": "澳洲",
     "en": "Australia",
     "folder": "Pictures/Australia",
-    "country": "Australia",
-    "dates": "Dec 23 – Jan 3",
+    "country": "澳洲",
+    "dates": "12月23日 – 1月3日",
     "cover": "Pictures/Australia/cover-twelve-apostles.jpg",
-    "route": "台北 → Melbourne → Sydney → Brisbane → 台北",
+    "route": "台北 → 墨爾本 → 雪梨 → 布里斯本 → 台北",
     "links": [
       {
-        "label": "Penguin Parade + Koala Park + Train (KKday)",
+        "label": "企鵝遊行 + 無尾熊公園 + 蒸汽火車一日遊（KKday）",
         "href": "https://www.kkday.com/zh-tw/product/137696"
       },
       {
-        "label": "Sydney Harbour BridgeClimb",
+        "label": "攀登雪梨港灣大橋 BridgeClimb",
         "href": "https://www.bridgeclimb.com/climbs-prices/summit"
       }
     ],
+    "captions": {
+      "Pictures/Australia/Day3/booking-penguin-parade.png": "企鵝遊行訂位",
+      "Pictures/Australia/Day5/booking-bridge-climb.png": "港灣大橋攀登訂位",
+      "Pictures/Australia/Day6/maritime-museum.jpg": "澳洲國家海事博物館",
+      "Pictures/Australia/Day7/blue-mountains.webp": "藍山",
+      "Pictures/Australia/Day7/scenic-railway.jpg": "景觀鐵道"
+    },
     "days": [
       {
-        "date": "Dec 23–24",
-        "city": "Melbourne 墨爾本",
-        "title": "🎄 Arrival & Melbourne City",
+        "date": "12月23–24日",
+        "city": "墨爾本",
+        "title": "🎄 抵達墨爾本 · 市區漫遊",
         "cover": "Pictures/Australia/Day1/state-library-victoria.jpg",
         "timeline": [
           {
-            "time": "Dec 23, 11:45 PM",
-            "text": "Flight 台北 ✈︎ 墨爾本 · Luggage 23kg × 2",
+            "time": "12月23日 晚上 11:45",
+            "text": "搭機 台北 ✈︎ 墨爾本 · 行李 23kg × 2",
             "photos": [
               {
                 "src": "Pictures/Australia/Day1/flight-taipei-melbourne.png",
-                "alt": "Flight ticket Taipei to Melbourne"
+                "alt": "台北飛墨爾本機票"
               }
             ]
           },
           {
-            "time": "12:05 PM",
-            "text": "Arrive at Melbourne T2"
+            "time": "中午 12:05",
+            "text": "抵達墨爾本機場 T2"
           },
           {
-            "time": "Afternoon",
-            "text": "Airbnb, then the city center for lunch at Kumo Desserts Melbourne"
+            "time": "下午",
+            "text": "先到 Airbnb，再去市中心的 Kumo Desserts Melbourne 吃午餐"
           },
           {
-            "time": "5:00 PM",
-            "text": "Wander around Melbourne",
+            "time": "下午 5:00",
+            "text": "墨爾本市區漫遊",
             "photos": [
               {
                 "src": "Pictures/Australia/Day1/state-library-victoria.jpg",
-                "alt": "State Library Victoria",
-                "caption": "State Library Victoria"
+                "alt": "維多利亞州立圖書館",
+                "caption": "維多利亞州立圖書館"
               },
               {
                 "src": "Pictures/Australia/Day1/yarra-river.jpg",
-                "alt": "Yarra River",
-                "caption": "Yarra River"
+                "alt": "亞拉河",
+                "caption": "亞拉河"
               },
               {
                 "src": "Pictures/Australia/Day1/skydeck.jpg",
-                "alt": "Melbourne Skydeck",
-                "caption": "Melbourne Skydeck"
+                "alt": "墨爾本 Skydeck 觀景台",
+                "caption": "墨爾本 Skydeck 觀景台"
               }
             ]
           }
         ]
       },
       {
-        "date": "Dec 25",
-        "city": "Melbourne 墨爾本",
-        "title": "🎅 Christmas City Day",
+        "date": "12月25日",
+        "city": "墨爾本",
+        "title": "🎅 聖誕節市區散步",
         "cover": "Pictures/Australia/Day2/st-kilda-beach.webp",
         "timeline": [
           {
-            "time": "8:00 AM",
-            "text": "Brekky on Degraves Street — must try Lune Croissanterie 🥐",
+            "time": "上午 8:00",
+            "text": "在 Degraves Street 吃早餐 — 必吃 Lune Croissanterie 可頌 🥐",
             "photos": [
               {
                 "src": "Pictures/Australia/Day2/coffee-laneway.jpg",
-                "alt": "Coffee laneway",
-                "caption": "Coffee laneway"
+                "alt": "咖啡巷",
+                "caption": "咖啡巷"
               },
               {
                 "src": "Pictures/Australia/Day2/lune-croissanterie.jpg",
-                "alt": "Lune Croissanterie",
-                "caption": "Lune Croissanterie"
+                "alt": "Lune Croissanterie 可頌",
+                "caption": "Lune Croissanterie 可頌"
               }
             ]
           },
           {
-            "time": "10:00 AM",
-            "text": "St Paul's Cathedral (the stained glass!)",
+            "time": "上午 10:00",
+            "text": "聖保羅大教堂（彩繪玻璃超美！）",
             "photos": [
               {
                 "src": "Pictures/Australia/Day2/st-pauls-cathedral.jpg",
-                "alt": "St Paul's Cathedral",
-                "caption": "St Paul's Cathedral"
+                "alt": "聖保羅大教堂",
+                "caption": "聖保羅大教堂"
               }
             ]
           },
           {
-            "time": "11:00 AM",
-            "text": "University of Melbourne",
+            "time": "上午 11:00",
+            "text": "墨爾本大學",
             "photos": [
               {
                 "src": "Pictures/Australia/Day2/university-of-melbourne.jpg",
-                "alt": "University of Melbourne",
-                "caption": "University of Melbourne"
+                "alt": "墨爾本大學",
+                "caption": "墨爾本大學"
               }
             ]
           },
           {
-            "time": "12:00 PM",
-            "text": "Bourke Street Mall shopping & lunch",
+            "time": "中午 12:00",
+            "text": "Bourke Street Mall 逛街、吃午餐",
             "photos": [
               {
                 "src": "Pictures/Australia/Day2/bourke-street-mall.webp",
@@ -128,236 +136,236 @@ window.TRIPS = [
             ]
           },
           {
-            "time": "4:00 PM",
-            "text": "Carlton Gardens",
+            "time": "下午 4:00",
+            "text": "卡爾頓花園",
             "photos": [
               {
                 "src": "Pictures/Australia/Day2/carlton-gardens.jpg",
-                "alt": "Carlton Gardens and the Royal Exhibition Building",
-                "caption": "Carlton Gardens & Royal Exhibition Building"
+                "alt": "卡爾頓花園與皇家展覽館",
+                "caption": "卡爾頓花園與皇家展覽館"
               }
             ]
           },
           {
-            "time": "5:00 PM",
-            "text": "St Kilda Beach",
+            "time": "下午 5:00",
+            "text": "聖基爾達海灘",
             "photos": [
               {
                 "src": "Pictures/Australia/Day2/st-kilda-beach.webp",
-                "alt": "St Kilda Beach",
-                "caption": "Sunset and Christmas hats at St Kilda"
+                "alt": "聖基爾達海灘",
+                "caption": "聖基爾達的夕陽與聖誕帽"
               }
             ]
           },
           {
-            "time": "6:30 PM",
-            "text": "Dinner in the city, early night before tomorrow's tour"
+            "time": "晚上 6:30",
+            "text": "市區吃晚餐，早點休息準備明天的行程"
           }
         ]
       },
       {
-        "date": "Dec 26",
-        "city": "Melbourne 墨爾本",
-        "title": "🐧 Penguins & Steam Train",
+        "date": "12月26日",
+        "city": "墨爾本",
+        "title": "🐧 企鵝遊行與蒸汽火車",
         "cover": "Pictures/Australia/Day3/penguin-parade.jpg",
         "timeline": [
           {
-            "time": "10:30 AM",
-            "text": "Depart from Grand Hyatt Melbourne"
+            "time": "上午 10:30",
+            "text": "從墨爾本君悅酒店出發"
           },
           {
-            "time": "12:45 PM",
-            "text": "Puffing Billy steam train",
+            "time": "中午 12:45",
+            "text": "普芬比利蒸汽火車 Puffing Billy",
             "photos": [
               {
                 "src": "Pictures/Australia/Day3/puffing-billy.png",
-                "alt": "Puffing Billy steam train",
-                "caption": "Puffing Billy"
+                "alt": "普芬比利蒸汽火車",
+                "caption": "普芬比利蒸汽火車"
               }
             ]
           },
           {
-            "time": "2:00 PM",
-            "text": "Maru Koala & Animal Park"
+            "time": "下午 2:00",
+            "text": "Maru 無尾熊動物園"
           },
           {
-            "time": "5:10 PM",
-            "text": "Penguin Parade at Phillip Island",
+            "time": "下午 5:10",
+            "text": "菲利普島企鵝遊行",
             "photos": [
               {
                 "src": "Pictures/Australia/Day3/penguin-parade.jpg",
-                "alt": "Penguins returning to the beach",
-                "caption": "Penguins coming home"
+                "alt": "企鵝上岸回家",
+                "caption": "企鵝回家囉"
               }
             ]
           },
           {
-            "time": "9:30 PM",
-            "text": "Back to Melbourne\n            Penguin Parade + Koala Park + Train tour: $4,388 · [KKday](https://www.kkday.com/zh-tw/product/137696)"
+            "time": "晚上 9:30",
+            "text": "返回墨爾本\n            企鵝遊行 + 無尾熊公園 + 蒸汽火車一日遊：$4,388 · [KKday](https://www.kkday.com/zh-tw/product/137696)"
           }
         ]
       },
       {
-        "date": "Dec 27",
-        "city": "Melbourne 墨爾本",
-        "title": "🏞️ Great Ocean Road & 12 Apostles",
+        "date": "12月27日",
+        "city": "墨爾本",
+        "title": "🏞️ 大洋路與十二門徒岩",
         "cover": "Pictures/Australia/Day4/twelve-apostles.jpg",
         "timeline": [
           {
-            "time": "7:30 AM",
-            "text": "Head toward Torquay and Kennett River",
+            "time": "上午 7:30",
+            "text": "出發前往托基與肯尼特河",
             "photos": [
               {
                 "src": "Pictures/Australia/Day4/great-ocean-road.webp",
-                "alt": "Great Ocean Road",
-                "caption": "Great Ocean Road"
+                "alt": "大洋路",
+                "caption": "大洋路"
               }
             ]
           },
           {
-            "time": "12:30 PM",
-            "text": "Lunch at Apollo Bay"
+            "time": "中午 12:30",
+            "text": "在阿波羅灣吃午餐"
           },
           {
-            "time": "1:30 PM",
-            "text": "Great Otway National Park",
+            "time": "下午 1:30",
+            "text": "奧特威國家公園",
             "photos": [
               {
                 "src": "Pictures/Australia/Day4/great-otway-national-park.jpg",
-                "alt": "Great Otway National Park",
-                "caption": "Great Otway National Park"
+                "alt": "奧特威國家公園",
+                "caption": "奧特威國家公園"
               },
               {
                 "src": "Pictures/Australia/Day4/wild-koala.png",
-                "alt": "Wild koala in a tree",
-                "caption": "A wild koala!"
+                "alt": "樹上的野生無尾熊",
+                "caption": "野生無尾熊！"
               }
             ]
           },
           {
-            "time": "4:00 PM",
-            "text": "The Twelve Apostles",
+            "time": "下午 4:00",
+            "text": "十二門徒岩",
             "photos": [
               {
                 "src": "Pictures/Australia/Day4/twelve-apostles.jpg",
-                "alt": "The Twelve Apostles",
-                "caption": "The Twelve Apostles"
+                "alt": "十二門徒岩",
+                "caption": "十二門徒岩"
               }
             ]
           },
           {
-            "time": "5:30 PM",
-            "text": "Loch Ard Gorge",
+            "time": "下午 5:30",
+            "text": "洛克阿德峽谷",
             "photos": [
               {
                 "src": "Pictures/Australia/Day4/loch-ard-gorge.jpg",
-                "alt": "Loch Ard Gorge",
-                "caption": "Loch Ard Gorge"
+                "alt": "洛克阿德峽谷",
+                "caption": "洛克阿德峽谷"
               }
             ]
           },
           {
-            "time": "6:30 PM",
-            "text": "Back to Melbourne"
+            "time": "晚上 6:30",
+            "text": "返回墨爾本"
           }
         ]
       },
       {
-        "date": "Dec 28",
-        "city": "Sydney 雪梨",
-        "title": "🏛️ Sydney Harbour & Opera House",
+        "date": "12月28日",
+        "city": "雪梨",
+        "title": "🏛️ 雪梨港與歌劇院",
         "cover": "Pictures/Australia/Day5/opera-house.webp",
         "timeline": [
           {
-            "time": "7:00 AM",
-            "text": "Fly Melbourne ✈︎ Sydney (at the airport by 5:30 AM · [terminal map](https://maps.app.goo.gl/RkHfqvoCXJ3j8sVP6))",
+            "time": "上午 7:00",
+            "text": "搭機 墨爾本 ✈︎ 雪梨（上午 5:30 前到機場 · [航廈地圖](https://maps.app.goo.gl/RkHfqvoCXJ3j8sVP6))",
             "photos": [
               {
                 "src": "Pictures/Australia/Day5/flight-melbourne-sydney.png",
-                "alt": "Flight ticket Melbourne to Sydney"
+                "alt": "墨爾本飛雪梨機票"
               }
             ]
           },
           {
-            "time": "8:25 AM",
-            "text": "Arrive at Sydney Airport"
+            "time": "上午 8:25",
+            "text": "抵達雪梨機場"
           },
           {
-            "time": "10:00 AM",
-            "text": "Brunch at Bills Surry Hills",
+            "time": "上午 10:00",
+            "text": "在 Bills Surry Hills 吃早午餐",
             "photos": [
               {
                 "src": "Pictures/Australia/Day5/bills-surry-hills.jpg",
                 "alt": "Bills Surry Hills",
-                "caption": "Bills"
+                "caption": "Bills 早午餐"
               }
             ]
           },
           {
-            "time": "11:00 AM",
-            "text": "Walk around the Sydney Opera House",
+            "time": "上午 11:00",
+            "text": "雪梨歌劇院散步",
             "photos": [
               {
                 "src": "Pictures/Australia/Day5/opera-house.webp",
-                "alt": "Sydney Opera House",
-                "caption": "Sydney Opera House"
+                "alt": "雪梨歌劇院",
+                "caption": "雪梨歌劇院"
               }
             ]
           },
           {
-            "time": "2:00 PM",
-            "text": "Shopping and Toby's Estate Coffee, 25 Martin Place",
+            "time": "下午 2:00",
+            "text": "逛街、喝 Toby's Estate Coffee（25 Martin Place）",
             "photos": [
               {
                 "src": "Pictures/Australia/Day5/tobys-estate.webp",
-                "alt": "Toby's Estate Coffee",
-                "caption": "Toby's Estate"
+                "alt": "Toby's Estate 咖啡",
+                "caption": "Toby's Estate 咖啡"
               },
               {
                 "src": "Pictures/Australia/Day5/tobys-estate-food.webp",
-                "alt": "Food at Toby's Estate",
-                "caption": "Toby's Estate food"
+                "alt": "Toby's Estate 的餐點",
+                "caption": "Toby's Estate 的餐點"
               }
             ]
           },
           {
-            "time": "7:35 PM",
-            "text": "Sydney Harbour BridgeClimb",
+            "time": "晚上 7:35",
+            "text": "攀登雪梨港灣大橋 BridgeClimb",
             "photos": [
               {
                 "src": "Pictures/Australia/Day5/bridge-climb.jpg",
-                "alt": "Sydney Harbour Bridge climb",
-                "caption": "BridgeClimb"
+                "alt": "攀登雪梨港灣大橋",
+                "caption": "攀登港灣大橋"
               }
             ]
           }
         ]
       },
       {
-        "date": "Dec 29",
-        "city": "Sydney 雪梨",
-        "title": "🐟 Sydney Central",
+        "date": "12月29日",
+        "city": "雪梨",
+        "title": "🐟 雪梨市中心",
         "cover": "Pictures/Australia/Day6/university-of-sydney.jpg",
         "timeline": [
           {
-            "time": "8:30 AM",
-            "text": "University of Sydney and Hyde Park",
+            "time": "上午 8:30",
+            "text": "雪梨大學與海德公園",
             "photos": [
               {
                 "src": "Pictures/Australia/Day6/university-of-sydney.jpg",
-                "alt": "University of Sydney",
-                "caption": "University of Sydney"
+                "alt": "雪梨大學",
+                "caption": "雪梨大學"
               },
               {
                 "src": "Pictures/Australia/Day6/hyde-park.webp",
-                "alt": "Hyde Park",
-                "caption": "Hyde Park"
+                "alt": "海德公園",
+                "caption": "海德公園"
               }
             ]
           },
           {
-            "time": "11:30 AM",
-            "text": "Lunch (Betty's Burgers) and dessert (Gelato Mochi) at Regent Place",
+            "time": "上午 11:30",
+            "text": "在 Regent Place 吃午餐（Betty's Burgers）和甜點（Gelato Mochi）",
             "photos": [
               {
                 "src": "Pictures/Australia/Day6/regent-place.jpg",
@@ -367,19 +375,19 @@ window.TRIPS = [
             ]
           },
           {
-            "time": "1:30 PM",
-            "text": "Sydney museum",
+            "time": "下午 1:30",
+            "text": "雪梨博物館",
             "photos": [
               {
                 "src": "Pictures/Australia/Day6/sydney-museum.jpg",
-                "alt": "Sydney museum",
-                "caption": "Sydney museum"
+                "alt": "雪梨博物館",
+                "caption": "雪梨博物館"
               }
             ]
           },
           {
-            "time": "4:00 PM",
-            "text": "Pitt Street Mall and The Strand Arcade",
+            "time": "下午 4:00",
+            "text": "Pitt Street Mall 與斯特蘭德拱廊",
             "photos": [
               {
                 "src": "Pictures/Australia/Day6/pitt-street-mall.jpg",
@@ -388,166 +396,166 @@ window.TRIPS = [
               },
               {
                 "src": "Pictures/Australia/Day6/strand-arcade.jpg",
-                "alt": "The Strand Arcade",
-                "caption": "The Strand Arcade"
+                "alt": "斯特蘭德拱廊",
+                "caption": "斯特蘭德拱廊"
               }
             ]
           },
           {
-            "time": "6:15 PM",
-            "text": "Epicurean buffet",
+            "time": "晚上 6:15",
+            "text": "Epicurean 自助餐",
             "photos": [
               {
                 "src": "Pictures/Australia/Day6/epicurean-restaurant.jpg",
-                "alt": "Epicurean restaurant"
+                "alt": "Epicurean 餐廳"
               },
               {
                 "src": "Pictures/Australia/Day6/epicurean-buffet.jpg",
-                "alt": "Epicurean buffet"
+                "alt": "Epicurean 自助餐"
               }
             ]
           },
           {
-            "time": "8:30 PM",
-            "text": "Crown Casino",
+            "time": "晚上 8:30",
+            "text": "皇冠賭場",
             "photos": [
               {
                 "src": "Pictures/Australia/Day6/crown-sydney.jpg",
-                "alt": "Crown Sydney"
+                "alt": "雪梨皇冠酒店"
               }
             ]
           }
         ]
       },
       {
-        "date": "Dec 30",
-        "city": "Sydney 雪梨",
-        "title": "🏞️ Blue Mountains",
+        "date": "12月30日",
+        "city": "雪梨",
+        "title": "🏞️ 藍山",
         "cover": "Pictures/Australia/Day7/three-sisters.jpeg",
         "timeline": [
           {
-            "time": "7:30 AM",
-            "text": "Leave from 68 Harbour Street"
+            "time": "上午 7:30",
+            "text": "從 68 Harbour Street 出發"
           },
           {
-            "time": "Morning",
-            "text": "Three Sisters at Echo Point",
+            "time": "上午",
+            "text": "回音谷三姊妹岩",
             "photos": [
               {
                 "src": "Pictures/Australia/Day7/three-sisters.jpeg",
-                "alt": "The Three Sisters",
-                "caption": "The Three Sisters"
+                "alt": "三姊妹岩",
+                "caption": "三姊妹岩"
               }
             ]
           },
           {
-            "time": "Afternoon",
-            "text": "Katoomba Scenic Railway",
+            "time": "下午",
+            "text": "卡通巴景觀鐵道",
             "photos": [
               {
                 "src": "Pictures/Australia/Day7/scenic-world.jpg",
-                "alt": "Scenic World Katoomba",
-                "caption": "Scenic Railway"
+                "alt": "卡通巴景觀世界",
+                "caption": "景觀鐵道"
               }
             ]
           },
           {
-            "time": "6:00 PM",
-            "text": "Back to Sydney Central by boat or bus"
+            "time": "晚上 6:00",
+            "text": "搭船或巴士回雪梨市中心"
           }
         ]
       },
       {
-        "date": "Dec 31",
-        "city": "Sydney 雪梨",
-        "title": "🎆 New Year's Eve Fireworks",
+        "date": "12月31日",
+        "city": "雪梨",
+        "title": "🎆 跨年煙火",
         "cover": "Pictures/Australia/Day8/new-years-eve-fireworks.avif",
         "timeline": [
           {
-            "time": "8:30 AM",
-            "text": "Claim a spot at the Royal Botanic Garden and wait for the fireworks",
+            "time": "上午 8:30",
+            "text": "到皇家植物園卡位，等跨年煙火",
             "photos": [
               {
                 "src": "Pictures/Australia/Day8/new-years-eve-fireworks.avif",
-                "alt": "New Year's Eve fireworks over Sydney Harbour",
-                "caption": "Happy New Year!"
+                "alt": "雪梨港跨年煙火",
+                "caption": "新年快樂！"
               }
             ]
           }
         ]
       },
       {
-        "date": "Jan 1",
-        "city": "Sydney 雪梨",
-        "title": "🦘 Taronga Zoo & Luna Park",
+        "date": "1月1日",
+        "city": "雪梨",
+        "title": "🦘 塔龍加動物園與月神公園",
         "cover": "Pictures/Australia/Day9/taronga-zoo.jpg",
         "timeline": [
           {
-            "time": "8:30 AM",
-            "text": "Taronga Zoo (ticket $950, koala photo $290)",
+            "time": "上午 8:30",
+            "text": "塔龍加動物園（門票 $950，無尾熊合照 $290）",
             "photos": [
               {
                 "src": "Pictures/Australia/Day9/taronga-zoo.jpg",
-                "alt": "Taronga Zoo with the Opera House behind",
-                "caption": "Taronga Zoo, with the Opera House across the water"
+                "alt": "塔龍加動物園，對岸就是歌劇院",
+                "caption": "塔龍加動物園，對岸就是歌劇院"
               }
             ]
           },
           {
-            "time": "12:30 PM",
-            "text": "Lunch at Sydney Fish Market",
+            "time": "中午 12:30",
+            "text": "在雪梨魚市場吃午餐",
             "photos": [
               {
                 "src": "Pictures/Australia/Day9/sydney-fish-market.webp",
-                "alt": "Sydney Fish Market"
+                "alt": "雪梨魚市場"
               }
             ]
           },
           {
-            "time": "1:30 PM",
-            "text": "Watermelon cake for dessert",
+            "time": "下午 1:30",
+            "text": "甜點吃西瓜蛋糕",
             "photos": [
               {
                 "src": "Pictures/Australia/Day9/watermelon-cake.webp",
-                "alt": "Strawberry watermelon cake"
+                "alt": "草莓西瓜蛋糕"
               }
             ]
           },
           {
-            "time": "3:30 PM",
-            "text": "Luna Park",
+            "time": "下午 3:30",
+            "text": "月神公園",
             "photos": [
               {
                 "src": "Pictures/Australia/Day9/luna-park.avif",
-                "alt": "Luna Park Sydney"
+                "alt": "雪梨月神公園"
               }
             ]
           },
           {
-            "time": "6:00 PM",
-            "text": "Dinner at 12 Miller Street, Haymarket",
+            "time": "晚上 6:00",
+            "text": "在 Haymarket 的 12 Miller Street 吃晚餐",
             "photos": [
               {
                 "src": "Pictures/Australia/Day9/12-miller-street.jpg",
-                "alt": "Dinner at Haymarket"
+                "alt": "Haymarket 晚餐"
               }
             ]
           },
           {
-            "time": "7:30 PM",
-            "text": "Maybe drinks at PS40"
+            "time": "晚上 7:30",
+            "text": "有空去 PS40 喝一杯"
           }
         ]
       },
       {
-        "date": "Jan 2",
-        "city": "Sydney 雪梨",
-        "title": "🏖️ DFO Homebush & Bondi Beach",
+        "date": "1月2日",
+        "city": "雪梨",
+        "title": "🏖️ DFO Homebush 與邦代海灘",
         "cover": "Pictures/Australia/Day10/bondi-beach.jpg",
         "timeline": [
           {
-            "time": "8:30 AM",
-            "text": "Breakfast and shopping at DFO Homebush",
+            "time": "上午 8:30",
+            "text": "在 DFO Homebush 吃早餐、逛街",
             "photos": [
               {
                 "src": "Pictures/Australia/Day10/dfo-homebush.jpg",
@@ -556,50 +564,50 @@ window.TRIPS = [
             ]
           },
           {
-            "time": "12:30 PM",
-            "text": "Bondi Beach",
+            "time": "中午 12:30",
+            "text": "邦代海灘",
             "photos": [
               {
                 "src": "Pictures/Australia/Day10/bondi-beach.jpg",
-                "alt": "Bondi Beach",
-                "caption": "Bondi Beach"
+                "alt": "邦代海灘",
+                "caption": "邦代海灘"
               }
             ]
           },
           {
-            "time": "3:30 PM",
-            "text": "Westfield Bondi Junction",
+            "time": "下午 3:30",
+            "text": "Westfield Bondi Junction 購物中心",
             "photos": [
               {
                 "src": "Pictures/Australia/Day10/westfield-bondi-junction.jpg",
-                "alt": "Westfield Bondi Junction"
+                "alt": "Westfield Bondi Junction 購物中心"
               }
             ]
           }
         ]
       },
       {
-        "date": "Jan 3",
-        "city": "Sydney 雪梨",
-        "title": "✈️ Flying Home",
+        "date": "1月3日",
+        "city": "雪梨",
+        "title": "✈️ 回家",
         "timeline": [
           {
-            "time": "6:00 PM",
-            "text": "Sydney ✈︎ Brisbane (at the airport by 4:30 PM)",
+            "time": "晚上 6:00",
+            "text": "雪梨 ✈︎ 布里斯本（下午 4:30 前到機場）",
             "photos": [
               {
                 "src": "Pictures/Australia/Day11/flight-sydney-brisbane.png",
-                "alt": "Flight ticket Sydney to Brisbane"
+                "alt": "雪梨飛布里斯本機票"
               }
             ]
           },
           {
-            "time": "10:35 PM",
-            "text": "Brisbane ✈︎ Taiwan",
+            "time": "晚上 10:35",
+            "text": "布里斯本 ✈︎ 台灣",
             "photos": [
               {
                 "src": "Pictures/Australia/Day11/flight-brisbane-taipei.png",
-                "alt": "Flight ticket Brisbane to Taiwan"
+                "alt": "布里斯本飛台灣機票"
               }
             ]
           }
@@ -612,10 +620,10 @@ window.TRIPS = [
     "name": "沖繩",
     "en": "Okinawa",
     "folder": "Pictures/Okinawa",
-    "country": "Japan 日本",
+    "country": "日本",
     "cover": "Pictures/Okinawa/cover-kouri-bridge.jpg",
     "coverCredit": {
-      "text": "Kouri Bridge · Takuya ASADA · CC BY 2.0",
+      "text": "古宇利大橋 · Takuya ASADA · CC BY 2.0",
       "href": "https://commons.wikimedia.org/wiki/File:Kouri_Bridge_(15130568259).jpg"
     },
     "days": [
@@ -756,39 +764,39 @@ window.TRIPS = [
     "name": "名古屋",
     "en": "Nagoya",
     "folder": "Pictures/Nagoya",
-    "country": "Japan 日本",
-    "dates": "Sep 25 – Sep 30",
+    "country": "日本",
+    "dates": "9月25日 – 9月30日",
     "route": "中部機場 → 美濃 → 白川鄉 → 飛驒高山 → 上高地 → 名古屋",
     "cover": "Pictures/Nagoya/cover-shirakawa-go.jpg",
     "coverCredit": {
-      "text": "Shirakawa-go · Alexkom000 · CC BY 4.0",
+      "text": "白川鄉 · Alexkom000 · CC BY 4.0",
       "href": "https://commons.wikimedia.org/wiki/File:2024-10-26_Shirakawa-go_02.jpg"
     },
     "days": [
       {
-        "date": "Sep 25",
+        "date": "9月25日",
         "title": "✈️ 抵達中部機場 → 美濃",
         "timeline": [
           {
-            "time": "9:00 PM",
+            "time": "晚上 9:00",
             "text": "抵達中部國際機場 Centrair，取車"
           },
           {
-            "time": "9:40 PM",
+            "time": "晚上 9:40",
             "text": "開車前往美濃，約 1.5 小時"
           },
           {
-            "time": "11:00 PM",
+            "time": "晚上 11:00",
             "text": "入住 Fairfield by Marriott Gifu Mino"
           }
         ]
       },
       {
-        "date": "Sep 26",
+        "date": "9月26日",
         "title": "🏡 白川鄉合掌村 · 飛驒高山",
         "timeline": [
           {
-            "time": "9:30 AM",
+            "time": "上午 9:30",
             "text": "白川鄉合掌村"
           },
           {
@@ -796,7 +804,7 @@ window.TRIPS = [
             "text": "圍爐裏"
           },
           {
-            "time": "3:00 PM",
+            "time": "下午 3:00",
             "text": "飛驒高山 古い町並・三町老街"
           },
           {
@@ -806,7 +814,7 @@ window.TRIPS = [
         ]
       },
       {
-        "date": "Sep 27",
+        "date": "9月27日",
         "title": "🏔️ 上高地一日遊",
         "timeline": [
           {
@@ -820,7 +828,7 @@ window.TRIPS = [
         ]
       },
       {
-        "date": "Sep 28",
+        "date": "9月28日",
         "title": "🛍️ 回名古屋 · 榮商圈",
         "timeline": [
           {
@@ -832,7 +840,7 @@ window.TRIPS = [
             "text": "うな富士 ／ 奏樹庵"
           },
           {
-            "time": "3:40 PM",
+            "time": "下午 3:40",
             "text": "分隊：A 隊 Costco、B 隊大須 + 市區"
           },
           {
@@ -842,7 +850,7 @@ window.TRIPS = [
         ]
       },
       {
-        "date": "Sep 29",
+        "date": "9月29日",
         "title": "🚃 名古屋車站商圈",
         "timeline": [
           {
@@ -864,11 +872,11 @@ window.TRIPS = [
         ]
       },
       {
-        "date": "Sep 30",
+        "date": "9月30日",
         "title": "✈️ 賦歸台灣",
         "timeline": [
           {
-            "time": "12:00 PM",
+            "time": "中午 12:00",
             "text": "中部國際機場班機回台灣"
           }
         ]

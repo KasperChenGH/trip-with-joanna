@@ -4,18 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trip with Joanna</title>
-  <meta name="description" content="Kasper & Joanna's travel memories — 澳洲 Australia, 沖繩 Okinawa and 名古屋 Nagoya, one page per day." />
+  <meta name="description" content="Kasper 與 Joanna 的旅行回憶：澳洲、沖繩、名古屋，一天一頁。" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=5" />
+  <link rel="stylesheet" href="style.css?v=7" />
 </head>
 <body>
-  <a class="skip-link" href="#main">跳到主要內容 Skip to content</a>
+  <a class="skip-link" href="#main">跳到主要內容</a>
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="#/"><span class="brand-mark" aria-hidden="true"></span>Trip with Joanna</a>
-      <nav class="site-nav" aria-label="Trips" id="site-nav">
+      <nav class="site-nav" aria-label="旅程" id="site-nav">
         <a href="#/" data-nav="home">首頁</a>
         <a href="#/australia" data-nav="australia">澳洲</a>
         <a href="#/okinawa" data-nav="okinawa">沖繩</a>
@@ -29,36 +29,36 @@
 
   <footer class="site-footer">
     <div class="wrap footer-inner">
-      <p class="sig">Kasper <span class="heart" aria-hidden="true">&#10084;</span><span class="visually-hidden">and</span> Joanna</p>
-      <nav class="footer-nav" aria-label="Footer">
+      <p class="sig">Kasper <span class="heart" aria-hidden="true">&#10084;</span><span class="visually-hidden">與</span> Joanna</p>
+      <nav class="footer-nav" aria-label="頁尾">
         <a href="#/">首頁</a><a href="#/australia">澳洲</a><a href="#/okinawa">沖繩</a><a href="#/nagoya">名古屋</a>
       </nav>
-      <p>Our travel memories, one page at a time.</p>
+      <p>我們的旅行回憶，一天一頁。</p>
     </div>
   </footer>
 
-  <!-- Phone: day list opened from the "Day 3 of 11" button -->
+  <!-- Phone: day list opened from the "第 3 天（共 11 天）" button -->
   <dialog class="sheet" id="sheet" aria-labelledby="sheet-title">
     <div class="sheet-inner">
       <div class="sheet-handle" aria-hidden="true"></div>
       <div class="sheet-head">
-        <h2 id="sheet-title">Jump to</h2>
-        <button class="sheet-close" type="button" aria-label="Close day list" data-sheet-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <h2 id="sheet-title">跳到</h2>
+        <button class="sheet-close" type="button" aria-label="關閉日程列表" data-sheet-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
       </div>
-      <nav class="rail in-sheet" aria-label="Trip pages" id="sheet-rail"></nav>
+      <nav class="rail in-sheet" aria-label="旅程頁面" id="sheet-rail"></nav>
     </div>
   </dialog>
 
-  <dialog class="lightbox" aria-label="Photo">
+  <dialog class="lightbox" aria-label="照片">
     <div class="lb-stage"><img alt=""></div>
     <p class="lb-caption"></p>
     <span class="lb-count" aria-hidden="true"></span>
-    <button class="lb-btn lb-close" type="button" aria-label="Close" data-lb="close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    <button class="lb-btn lb-prev" type="button" aria-label="Previous photo" data-lb="prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
-    <button class="lb-btn lb-next" type="button" aria-label="Next photo" data-lb="next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    <button class="lb-btn lb-close" type="button" aria-label="關閉" data-lb="close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <button class="lb-btn lb-prev" type="button" aria-label="上一張" data-lb="prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+    <button class="lb-btn lb-next" type="button" aria-label="下一張" data-lb="next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
   </dialog>
 
-  <script src="trips.js?v=5"></script>
-  <script src="script.js?v=5"></script>
+  <script src="trips.js?v=7"></script>
+  <script src="script.js?v=7"></script>
 </body>
 </html>

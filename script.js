@@ -13,6 +13,8 @@ const AUTO_NAME = /^(line_album|img|dsc|pxl|mvimg|photo|image|screenshot)[\s_-]|
 const LOCAL_HOST = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
 
 const TRIPS = window.TRIPS.map(normalizeTrip);
+// Captions set in trips.js override the file-name caption (Australia photos have English file names).
+const CAPTIONS = Object.assign({}, ...window.TRIPS.map(trip => trip.captions || {}));
 const main = document.getElementById('main');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -37,7 +39,7 @@ function normalizeTrip(trip, index) {
     ...trip,
     no: index + 1,
     days,
-    length: `${days.length} days`,
+    length: `${days.length} 天`,
     cities: [...new Set(days.map(day => day.city).filter(Boolean))],
   };
 }
@@ -66,7 +68,7 @@ function rich(text) {
 }
 
 function dayTitle(day) {
-  return day.title || `Day ${day.n}`;
+  return day.title || `第 ${day.n} 天`;
 }
 
 function arrow(icon, size) {
@@ -110,7 +112,7 @@ function listFiles(folder, pattern) {
         name,
         src: `${folder}/${encodeURIComponent(name)}`,
         // "03 Shurijo Castle.jpg" -> "Shurijo Castle", "maritime-museum.jpg" -> "maritime museum"
-        caption: AUTO_NAME.test(base) ? '' : base.replace(/^\d+[\s_.-]*/, '').replace(/[-_]+/g, ' '),
+        caption: CAPTIONS[`${folder}/${name}`] || (AUTO_NAME.test(base) ? '' : base.replace(/^\d+[\s_.-]*/, '').replace(/[-_]+/g, ' ')),
       };
     }));
 }
@@ -156,7 +158,7 @@ function emptyState(title, hint, path) {
 // Licensed cover photos (CC BY) must show who took them.
 function photoCredit(trip) {
   const credit = trip.coverCredit;
-  return credit ? `<a class="photo-credit" href="${esc(credit.href)}" target="_blank" rel="noopener">Photo: ${esc(credit.text)}</a>` : '';
+  return credit ? `<a class="photo-credit" href="${esc(credit.href)}" target="_blank" rel="noopener">攝影：${esc(credit.text)}</a>` : '';
 }
 
 // A cover area that shows the trip photo, or a teal gradient until the first photo of Day 1 is pushed.
@@ -171,28 +173,28 @@ function pageHome() {
   const slides = TRIPS.map((trip, k) => {
     const bg = coverBackground(trip);
     const meta = [trip.dates, trip.length, trip.country].filter(Boolean).map(m => `<li>${esc(m)}</li>`).join('');
-    return `<div class="slide${bg.cls}${k === 0 ? ' is-active' : ''}"${bg.attr} role="group" aria-roledescription="slide" aria-label="${k + 1} of ${TRIPS.length}: ${esc(trip.en)}"${k === 0 ? '' : ' aria-hidden="true"'}>${bg.html}
-      <div class="wrap slide-inner"><div><p class="eyebrow">Trip No. ${pad(trip.no)}</p><h2>${esc(trip.name)} <span class="latin">${esc(trip.en)}</span></h2></div>
-      <div><ul class="hero-meta">${meta}</ul><a class="hero-cta" href="#/${trip.id}">Open ${esc(trip.name)} ${esc(trip.en)} <span aria-hidden="true">→</span></a></div></div></div>`;
+    return `<div class="slide${bg.cls}${k === 0 ? ' is-active' : ''}"${bg.attr} role="group" aria-roledescription="slide" aria-label="${k + 1} / ${TRIPS.length}：${esc(trip.name)}"${k === 0 ? '' : ' aria-hidden="true"'}>${bg.html}
+      <div class="wrap slide-inner"><div><p class="eyebrow">旅程 No. ${pad(trip.no)}</p><h2>${esc(trip.name)}</h2></div>
+      <div><ul class="hero-meta">${meta}</ul><a class="hero-cta" href="#/${trip.id}">看${esc(trip.name)}行程 <span aria-hidden="true">→</span></a></div></div></div>`;
   }).join('');
   const cards = TRIPS.map(trip => {
     const cover = trip.cover
       ? `<div class="trip-cover-wrap"><img src="${esc(trip.cover)}" alt="" loading="lazy"></div>`
-      : `<div class="cover-soon" data-cover-folder="${esc(trip.days[0].folder)}" data-cover-kind="card">${ICON.waves}<p class="ghost" aria-hidden="true">${esc(trip.en)}</p><span class="soon-tag">Coming soon · 照片即將上傳</span></div>`;
+      : `<div class="cover-soon" data-cover-folder="${esc(trip.days[0].folder)}" data-cover-kind="card">${ICON.waves}<p class="ghost" aria-hidden="true">${esc(trip.en)}</p><span class="soon-tag">照片即將上傳</span></div>`;
     return `<a class="trip-card" href="#/${trip.id}">${cover}<div class="trip-card-body"><span class="trip-no">No. ${pad(trip.no)}</span>
-      <p class="trip-meta">${esc([trip.dates, trip.length].filter(Boolean).join(' · '))}</p><h3>${esc(trip.name)}<span class="latin">${esc(trip.en)}</span></h3>
-      <p class="where">${esc(trip.cities.length ? trip.cities.join(' · ') : trip.country)}</p><span class="go">${trip.days.length} days, one page each <span aria-hidden="true">→</span></span></div></a>`;
+      <p class="trip-meta">${esc([trip.dates, trip.length].filter(Boolean).join(' · '))}</p><h3>${esc(trip.name)}</h3>
+      <p class="where">${esc(trip.cities.length ? trip.cities.join(' · ') : trip.country)}</p><span class="go">${trip.days.length} 天，一天一頁 <span aria-hidden="true">→</span></span></div></a>`;
   }).join('');
   const countries = new Set(TRIPS.map(trip => trip.country)).size;
   const credited = TRIPS.filter(trip => trip.coverCredit);
   const credits = credited.length
-    ? `<p class="credits">Cover photos via Wikimedia Commons: ${credited.map(trip => `<a href="${esc(trip.coverCredit.href)}" target="_blank" rel="noopener">${esc(trip.coverCredit.text)}</a>`).join(' · ')}</p>`
+    ? `<p class="credits">封面照片來源 Wikimedia Commons：${credited.map(trip => `<a href="${esc(trip.coverCredit.href)}" target="_blank" rel="noopener">${esc(trip.coverCredit.text)}</a>`).join(' · ')}</p>`
     : '';
-  return `<section class="wrap masthead"><div><p class="eyebrow">Kasper &amp; Joanna · Travel journal</p><h1 id="page-h" tabindex="-1">我們的旅行回憶</h1><p class="lead display-it">Every trip we take together, one day at a time.</p></div>
-    <ul class="stats" aria-label="At a glance"><li><b>${pad(TRIPS.length)}</b>trips · 旅程</li><li><b>${pad(countries)}</b>countries · 國家</li></ul></section>
-    <section class="carousel on-dark" aria-roledescription="carousel" aria-label="Our trips" id="carousel"><div class="slides">${slides}</div>
+  return `<section class="wrap masthead"><div><p class="eyebrow">Kasper &amp; Joanna · 旅行日記</p><h1 id="page-h" tabindex="-1">我們的旅行回憶</h1><p class="lead">一起走過的每一趟旅程，一天一頁慢慢記下。</p></div>
+    <ul class="stats" aria-label="旅程統計"><li><b>${pad(TRIPS.length)}</b>趟旅程</li><li><b>${pad(countries)}</b>個國家</li></ul></section>
+    <section class="carousel on-dark" aria-roledescription="carousel" aria-label="我們的旅程" id="carousel"><div class="slides">${slides}</div>
     </section>
-    <section class="wrap trips" aria-labelledby="trips-title"><div class="trips-head"><h2 id="trips-title">旅程<span class="display-it">Trips</span></h2><p>${TRIPS.length} trips · one page per day</p></div><div class="trip-grid">${cards}</div>${credits}</section>`;
+    <section class="wrap trips" aria-labelledby="trips-title"><div class="trips-head"><h2 id="trips-title">旅程</h2><p>${TRIPS.length} 趟旅程 · 一天一頁</p></div><div class="trip-grid">${cards}</div>${credits}</section>`;
 }
 
 // Home hero: crossfade between trips every 6s; pauses while hovered or focused.
@@ -233,11 +235,11 @@ function pageOverview(trip) {
   const bg = coverBackground(trip);
   const meta = [trip.dates, trip.length, ...trip.cities].filter(Boolean).map(m => `<li>${esc(m)}</li>`).join('');
   const hero = `<section class="trip-hero on-dark${bg.cls}"${bg.attr}>${bg.html}<div class="wrap hero-inner">
-    <div><p class="eyebrow">Trip No. ${pad(trip.no)} · ${esc(trip.country)}</p><h1 id="page-h" tabindex="-1">${esc(trip.name)} <span class="latin">${esc(trip.en)}</span></h1></div>
+    <div><p class="eyebrow">旅程 No. ${pad(trip.no)} · ${esc(trip.country)}</p><h1 id="page-h" tabindex="-1">${esc(trip.name)}</h1></div>
     <ul class="hero-meta">${meta}</ul></div></section>`;
   const schedule = `<a class="sched-card" href="#/${trip.id}/schedule"><span class="sc-ico" aria-hidden="true">${ICON.cal}</span>
-    <div><h2>行程 <span class="display-it muted">Schedule</span></h2><p>${trip.route ? esc(trip.route) : 'Itinerary, tickets &amp; bookings'}</p></div>
-    <span class="go">Open schedule ${arrow(ICON.arrowR, 16)}</span></a>`;
+    <div><h2>行程表</h2><p>${trip.route ? esc(trip.route) : '行程、機票與訂位'}</p></div>
+    <span class="go">看行程表 ${arrow(ICON.arrowR, 16)}</span></a>`;
   let lastCity = null;
   const cards = trip.days.map((day, i) => {
     let group = '';
@@ -245,20 +247,20 @@ function pageOverview(trip) {
       lastCity = day.city;
       let end = i;
       while (end + 1 < trip.days.length && trip.days[end + 1].city === day.city) end++;
-      group = `<h3 class="grid-group">${esc(day.city)} <small>Day ${day.n}${end > i ? `–${trip.days[end].n}` : ''}</small></h3>`;
+      group = `<h3 class="grid-group">${esc(day.city)} <small>第 ${day.n}${end > i ? `–${trip.days[end].n}` : ''} 天</small></h3>`;
     }
     // The day's own cover (its main event); Japan days use the first photo in their folder.
     const cover = day.cover
-      ? `<div class="dc-cover"><span class="dc-num">Day ${day.n}</span>${framedPhoto(day.cover, '')}</div>`
-      : `<div class="dc-cover soon" data-cover-folder="${esc(day.folder)}" data-cover-kind="day"><span class="dc-num">Day ${day.n}</span><span class="big" aria-hidden="true">${pad(day.n)}</span></div>`;
+      ? `<div class="dc-cover"><span class="dc-num">第 ${day.n} 天</span>${framedPhoto(day.cover, '')}</div>`
+      : `<div class="dc-cover soon" data-cover-folder="${esc(day.folder)}" data-cover-kind="day"><span class="dc-num">第 ${day.n} 天</span><span class="big" aria-hidden="true">${pad(day.n)}</span></div>`;
     return `${group}<a class="day-card" href="#/${trip.id}/day/${day.n}">${cover}<div class="dc-body">
-      <p class="dc-date">${esc(day.date || `Day ${day.n}`)}</p>
-      ${day.title ? `<h3 class="dc-title">${esc(day.title)}</h3>` : `<h3 class="dc-title pending">第${day.n}天 Day ${day.n}</h3>`}
+      <p class="dc-date">${esc(day.date || `第 ${day.n} 天`)}</p>
+      ${day.title ? `<h3 class="dc-title">${esc(day.title)}</h3>` : `<h3 class="dc-title pending">第 ${day.n} 天</h3>`}
       ${day.city ? `<span class="city-tag">${esc(day.city)}</span>` : ''}
       <p class="dc-count" data-count-folder="${esc(day.folder)}"></p></div></a>`;
   }).join('');
   return `${hero}<div class="wrap overview">${schedule}
-    <div class="days-head"><h2>每一天 <span class="display-it">Day by day</span></h2><p>Open a day to see its page.</p></div>
+    <div class="days-head"><h2>每一天</h2><p>點選一天，看當天的行程與照片。</p></div>
     <div class="day-grid">${cards}</div></div>`;
 }
 
@@ -267,15 +269,15 @@ function pageOverview(trip) {
 function railHtml(trip, route) {
   const current = on => (on ? ' aria-current="page"' : '');
   let html = `<ul class="rail-list">
-    <li><a href="#/${trip.id}"><span class="ico">${ICON.home}</span><span><span class="rt">Overview</span><span class="rd">${esc(trip.name)} ${esc(trip.en)}</span></span></a></li>
-    <li><a href="#/${trip.id}/schedule"${current(route.view === 'schedule')}><span class="ico">${ICON.cal}</span><span><span class="rt">Schedule</span><span class="rd">Itinerary &amp; tickets</span></span></a></li>`;
+    <li><a href="#/${trip.id}"><span class="ico">${ICON.home}</span><span><span class="rt">總覽</span><span class="rd">${esc(trip.name)}</span></span></a></li>
+    <li><a href="#/${trip.id}/schedule"${current(route.view === 'schedule')}><span class="ico">${ICON.cal}</span><span><span class="rt">行程表</span><span class="rd">行程與機票</span></span></a></li>`;
   let lastCity = null;
   trip.days.forEach(day => {
     if (trip.cities.length && day.city !== lastCity) {
       lastCity = day.city;
       html += `<li class="rail-group" role="presentation">${esc(day.city)}</li>`;
     } else if (!trip.cities.length && day.n === 1) {
-      html += '<li class="rail-group" role="presentation">Days</li>';
+      html += '<li class="rail-group" role="presentation">每一天</li>';
     }
     html += `<li><a href="#/${trip.id}/day/${day.n}"${current(route.view === 'day' && route.n === day.n)}><span class="rn" aria-hidden="true">${pad(day.n)}</span>
       <span><span class="rt">${esc(dayTitle(day))}</span>${day.date ? `<span class="rd">${esc(day.date)}</span>` : ''}</span></a></li>`;
@@ -286,9 +288,9 @@ function railHtml(trip, route) {
 // Order of pages inside a trip: overview → schedule → day 1 … N
 function neighbours(trip, route) {
   const pages = [
-    { href: `#/${trip.id}`, label: 'Overview', title: `${trip.name} ${trip.en}` },
-    { href: `#/${trip.id}/schedule`, label: 'Schedule', title: 'Itinerary & tickets' },
-    ...trip.days.map(day => ({ href: `#/${trip.id}/day/${day.n}`, label: `Day ${day.n}${day.date ? ` · ${day.date}` : ''}`, title: dayTitle(day) })),
+    { href: `#/${trip.id}`, label: '總覽', title: `${trip.name}總覽` },
+    { href: `#/${trip.id}/schedule`, label: '行程表', title: '行程與機票' },
+    ...trip.days.map(day => ({ href: `#/${trip.id}/day/${day.n}`, label: `第 ${day.n} 天${day.date ? ` · ${day.date}` : ''}`, title: dayTitle(day) })),
   ];
   const k = route.view === 'schedule' ? 1 : route.n + 1;
   return { prev: pages[k - 1], next: pages[k + 1] };
@@ -296,16 +298,16 @@ function neighbours(trip, route) {
 
 function pager(trip, route) {
   const { prev, next } = neighbours(trip, route);
-  return `<nav class="pager" aria-label="Previous and next">
-    ${prev ? `<a class="prev" href="${prev.href}"><span class="nl-arrow">${ICON.arrowL}</span><span><span class="nl-label">Previous</span><span class="nl-title">${esc(prev.title)}</span></span></a>` : ''}
-    ${next ? `<a class="next" href="${next.href}"><span class="nl-arrow">${ICON.arrowR}</span><span><span class="nl-label">Next · ${esc(next.label)}</span><span class="nl-title">${esc(next.title)}</span></span></a>` : ''}
-    </nav><a class="back-link" href="#/${trip.id}">${arrow(ICON.arrowL, 16)} Back to ${esc(trip.name)} overview</a>`;
+  return `<nav class="pager" aria-label="上一頁與下一頁">
+    ${prev ? `<a class="prev" href="${prev.href}"><span class="nl-arrow">${ICON.arrowL}</span><span><span class="nl-label">上一頁</span><span class="nl-title">${esc(prev.title)}</span></span></a>` : ''}
+    ${next ? `<a class="next" href="${next.href}"><span class="nl-arrow">${ICON.arrowR}</span><span><span class="nl-label">下一頁 · ${esc(next.label)}</span><span class="nl-title">${esc(next.title)}</span></span></a>` : ''}
+    </nav><a class="back-link" href="#/${trip.id}">${arrow(ICON.arrowL, 16)} 回到${esc(trip.name)}總覽</a>`;
 }
 
 function bottomBar(trip, route) {
   const { prev, next } = neighbours(trip, route);
-  const middle = route.view === 'day' ? `${route.n} / ${trip.days.length}` : 'Schedule';
-  return `<nav class="bottom-bar" aria-label="Previous and next">
+  const middle = route.view === 'day' ? `${route.n} / ${trip.days.length}` : '行程表';
+  return `<nav class="bottom-bar" aria-label="上一頁與下一頁">
     ${prev ? `<a class="prev" href="${prev.href}">${ICON.arrowL}<span class="bb-txt">${esc(prev.label)}</span></a>` : '<span class="dis"></span>'}
     <span class="bb-mid">${esc(middle)}</span>
     ${next ? `<a class="next" href="${next.href}">${ICON.arrowR}<span class="bb-txt">${esc(next.label)}</span></a>` : '<span class="dis"></span>'}</nav>`;
@@ -313,18 +315,18 @@ function bottomBar(trip, route) {
 
 function daySelect(trip, route) {
   const day = route.view === 'day' ? trip.days[route.n - 1] : null;
-  const title = day ? `Day ${day.n} of ${trip.days.length}` : 'Schedule';
-  const sub = day ? [day.date, day.city, day.title].filter(Boolean).join(' · ') : `${trip.name} ${trip.en}`;
+  const title = day ? `第 ${day.n} 天（共 ${trip.days.length} 天）` : '行程表';
+  const sub = day ? [day.date, day.city, day.title].filter(Boolean).join(' · ') : trip.name;
   return `<button class="day-select" type="button" data-sheet-open aria-haspopup="dialog" aria-controls="sheet"><span><span class="ds-main">${esc(title)}</span><span class="ds-sub">${esc(sub)}</span></span><span class="ds-caret">${ICON.caret}</span></button>`;
 }
 
 function paneSchedule(trip) {
   const links = trip.links.length
-    ? `<div class="section-kicker"><span class="no">§</span><h2 style="font-size:1.15rem">Bookings</h2></div><ul class="link-list">${trip.links.map(link => `<li><a href="${esc(link.href)}" target="_blank" rel="noopener">${esc(link.label)} ↗</a></li>`).join('')}</ul>`
+    ? `<div class="section-kicker"><span class="no">§</span><h2 style="font-size:1.15rem">訂位與票券</h2></div><ul class="link-list">${trip.links.map(link => `<li><a href="${esc(link.href)}" target="_blank" rel="noopener">${esc(link.label)} ↗</a></li>`).join('')}</ul>`
     : '';
-  return `<header class="pane-head plain"><p class="eyebrow">Schedule</p><h1 id="page-h" tabindex="-1">行程 <span class="display-it">Itinerary &amp; tickets</span></h1>
+  return `<header class="pane-head plain"><p class="eyebrow">行程表</p><h1 id="page-h" tabindex="-1">行程與機票</h1>
     ${trip.route ? `<p class="pane-sub">${esc(trip.route)}</p>` : ''}</header>
-    <div data-schedule-folder="${esc(trip.folder)}/Schedule"><p class="muted">Loading…</p></div>${links}${pager(trip, { view: 'schedule' })}`;
+    <div data-schedule-folder="${esc(trip.folder)}/Schedule"><p class="muted">載入中…</p></div>${links}${pager(trip, { view: 'schedule' })}`;
 }
 
 function paneDay(trip, n) {
@@ -332,10 +334,10 @@ function paneDay(trip, n) {
   const inline = day.timeline.filter(item => (item.photos || []).length > 1).flatMap(item => item.photos);
   const singles = day.timeline.filter(item => (item.photos || []).length === 1).map(item => item.photos[0]);
   return `<header class="pane-head"><span class="day-num" aria-hidden="true">${pad(n)}</span>
-    <p class="day-label">Day ${n} of ${trip.days.length}${day.date ? ` · ${esc(day.date)}` : ''}${day.city ? `<span class="city-tag">${esc(day.city)}</span>` : ''}</p>
+    <p class="day-label">第 ${n} 天 / 共 ${trip.days.length} 天${day.date ? ` · ${esc(day.date)}` : ''}${day.city ? `<span class="city-tag">${esc(day.city)}</span>` : ''}</p>
     <h1 id="page-h" tabindex="-1">${esc(dayTitle(day))}</h1></header>
     ${day.timeline.length ? renderTimeline(day) : ''}
-    <div data-gallery-folder="${esc(day.folder)}" data-gallery-label="${esc(`${trip.en} Day ${n} photo`)}"
+    <div data-gallery-folder="${esc(day.folder)}" data-gallery-label="${esc(`${trip.name}第 ${n} 天照片`)}"
       data-gallery-exclude="${esc(JSON.stringify(inline.map(photo => photo.src)))}" data-gallery-first="${esc(JSON.stringify(singles))}"
       ${day.timeline.length ? ' data-gallery-extra' : ''}></div>
     ${pager(trip, { view: 'day', n })}`;
@@ -344,11 +346,11 @@ function paneDay(trip, n) {
 function pageTripFrame(trip, route) {
   const bg = coverBackground(trip);
   const band = `<section class="trip-band on-dark${bg.cls}"${bg.attr}>${bg.html}<div class="wrap band-inner">
-    <div><p class="eyebrow">Trip No. ${pad(trip.no)}${trip.dates ? ` · ${esc(trip.dates)}` : ''} · ${esc(trip.length)}</p><p class="band-title">${esc(trip.name)}<span class="latin">${esc(trip.en)}</span></p></div>
-    <a class="band-crumb" href="#/${trip.id}">${arrow(ICON.arrowL, 16)}&nbsp; Back to overview</a></div></section>`;
+    <div><p class="eyebrow">旅程 No. ${pad(trip.no)}${trip.dates ? ` · ${esc(trip.dates)}` : ''} · ${esc(trip.length)}</p><p class="band-title">${esc(trip.name)}</p></div>
+    <a class="band-crumb" href="#/${trip.id}">${arrow(ICON.arrowL, 16)}&nbsp; 回到總覽</a></div></section>`;
   const pane = route.view === 'day' ? paneDay(trip, route.n) : paneSchedule(trip);
   document.getElementById('sheet-rail').innerHTML = railHtml(trip, route);
-  return `${band}<div class="wrap trip-layout"><nav class="rail" aria-label="Trip pages">${railHtml(trip, route)}</nav>
+  return `${band}<div class="wrap trip-layout"><nav class="rail" aria-label="旅程頁面">${railHtml(trip, route)}</nav>
     <div>${daySelect(trip, route)}<section class="pane">${pane}</section></div></div>${bottomBar(trip, route)}`;
 }
 
@@ -373,7 +375,7 @@ function fillPhotos(root) {
 
   root.querySelectorAll('[data-count-folder]').forEach(el => {
     listPhotos(el.dataset.countFolder)
-      .then(photos => { el.textContent = photos.length ? `${photos.length} photo${photos.length === 1 ? '' : 's'}` : 'Photos coming soon'; })
+      .then(photos => { el.textContent = photos.length ? `${photos.length} 張照片` : '照片即將上傳'; })
       .catch(() => {});
   });
 
@@ -386,16 +388,16 @@ function fillPhotos(root) {
     const extra = el.hasAttribute('data-gallery-extra');
     const show = photos => {
       if (photos.length) {
-        el.innerHTML = (extra ? '<p class="state-label">Photos</p>' : '') + photoGrid(photos, el.dataset.galleryLabel);
+        el.innerHTML = (extra ? '<p class="state-label">照片</p>' : '') + photoGrid(photos, el.dataset.galleryLabel);
       } else if (!extra) {
-        el.innerHTML = emptyState('Photos coming soon <span class="display-it">· 照片即將上傳</span>', 'Push photos into this day’s folder and they appear here.', `${folder}/`);
+        el.innerHTML = emptyState('照片即將上傳', '把照片放進這一天的資料夾，推送後就會出現在這裡。', `${folder}/`);
       }
     };
     listPhotos(folder)
       .then(photos => show([...first, ...photos.filter(photo => !shown.has(decodeURIComponent(photo.src)))]))
       .catch(() => {
         if (first.length) show(first);
-        else if (!extra) el.innerHTML = emptyState('Could not load photos', 'Try again in a moment.');
+        else if (!extra) el.innerHTML = emptyState('照片暫時無法載入', '請稍後再試。');
       });
   });
 
@@ -405,15 +407,15 @@ function fillPhotos(root) {
     Promise.all([listPhotos(folder), listFiles(folder, DOCUMENT_EXTENSIONS)])
       .then(([images, documents]) => {
         if (!images.length && !documents.length) {
-          el.innerHTML = emptyState('Schedule coming soon <span class="display-it">· 行程整理中</span>', 'Drop itinerary screenshots or PDFs into the Schedule folder and they appear here.', `${folder}/`);
+          el.innerHTML = emptyState('行程整理中', '把行程截圖或 PDF 放進 Schedule 資料夾，就會出現在這裡。', `${folder}/`);
           return;
         }
-        el.innerHTML = `<div class="sched-grid">${images.map(image => `<figure class="sched-img"><div class="sched-bar"><b>${esc(image.caption || '行程 Schedule')}</b><span>image</span></div>
-          <div class="sched-stage"><img class="sched-shot" src="${esc(image.src)}" alt="${esc(image.caption || 'Schedule')}" loading="lazy" tabindex="0" role="button"></div></figure>`).join('')}
+        el.innerHTML = `<div class="sched-grid">${images.map(image => `<figure class="sched-img"><div class="sched-bar"><b>${esc(image.caption || '行程表')}</b><span>圖片</span></div>
+          <div class="sched-stage"><img class="sched-shot" src="${esc(image.src)}" alt="${esc(image.caption || '行程表')}" loading="lazy" tabindex="0" role="button"></div></figure>`).join('')}
           ${documents.map(doc => `<a class="pdf-card" href="${esc(doc.src)}" target="_blank" rel="noopener"><span class="pdf-icon" aria-hidden="true">PDF</span>
-          <span><span class="pdf-name">${esc(doc.caption || doc.name)}</span><span class="pdf-meta">PDF · opens in a new tab</span></span><span class="pdf-go">Open ↗</span></a>`).join('')}</div>`;
+          <span><span class="pdf-name">${esc(doc.caption || doc.name)}</span><span class="pdf-meta">PDF · 在新分頁開啟</span></span><span class="pdf-go">開啟 ↗</span></a>`).join('')}</div>`;
       })
-      .catch(() => { el.innerHTML = emptyState('Could not load the schedule', 'Try again in a moment.'); });
+      .catch(() => { el.innerHTML = emptyState('行程暫時無法載入', '請稍後再試。'); });
   });
 }
 
@@ -442,12 +444,12 @@ function render() {
     startCarousel();
   } else if (route.view === 'overview') {
     main.innerHTML = pageOverview(trip);
-    document.title = `${trip.name} ${trip.en} — Trip with Joanna`;
+    document.title = `${trip.name} — Trip with Joanna`;
   } else {
     main.innerHTML = pageTripFrame(trip, route);
     const day = route.view === 'day' ? trip.days[route.n - 1] : null;
-    const page = day ? `Day ${day.n}${day.title ? ` · ${day.title}` : ''}` : 'Schedule';
-    document.title = `${page} — ${trip.name} ${trip.en} — Trip with Joanna`;
+    const page = day ? `第 ${day.n} 天${day.title ? ` · ${day.title}` : ''}` : '行程表';
+    document.title = `${page} — ${trip.name} — Trip with Joanna`;
   }
 
   document.querySelectorAll('#site-nav a').forEach(link => {
