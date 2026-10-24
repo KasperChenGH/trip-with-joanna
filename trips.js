@@ -26,14 +26,10 @@ window.TRIPS = [
       }
     ],
     "captions": {
-      "Pictures/Australia/Day3/booking-penguin-parade.png": "企鵝遊行訂位",
-      "Pictures/Australia/Day5/booking-bridge-climb.png": "港灣大橋攀登訂位",
       "Pictures/Australia/Day6/maritime-museum.jpg": "澳洲國家海事博物館",
       "Pictures/Australia/Day7/blue-mountains.webp": "藍山",
       "Pictures/Australia/Day7/scenic-railway.jpg": "景觀鐵道",
-      "Pictures/Australia/Schedule/australia-itinerary.jpg": "行程總覽",
-      "Pictures/Australia/Schedule/flight-taipei-melbourne-fares.png": "去程機票：台北 → 墨爾本",
-      "Pictures/Australia/Schedule/flight-sydney-taipei-itinerary.png": "回程機票：雪梨 → 布里斯本 → 台北"
+      "Pictures/Australia/Schedule/australia-itinerary.jpg": "行程總覽"
     },
     "days": [
       {
@@ -44,13 +40,7 @@ window.TRIPS = [
         "timeline": [
           {
             "time": "12月23日 晚上 11:45",
-            "text": "搭機 台北 ✈︎ 墨爾本 · 行李 23kg × 2",
-            "photos": [
-              {
-                "src": "Pictures/Australia/Day1/flight-taipei-melbourne.png",
-                "alt": "台北飛墨爾本機票"
-              }
-            ]
+            "text": "搭機 台北 ✈︎ 墨爾本 · 行李 23kg × 2"
           },
           {
             "time": "中午 12:05",
@@ -281,13 +271,7 @@ window.TRIPS = [
         "timeline": [
           {
             "time": "上午 7:00",
-            "text": "搭機 墨爾本 ✈︎ 雪梨（上午 5:30 前到機場 · [航廈地圖](https://maps.app.goo.gl/RkHfqvoCXJ3j8sVP6))",
-            "photos": [
-              {
-                "src": "Pictures/Australia/Day5/flight-melbourne-sydney.png",
-                "alt": "墨爾本飛雪梨機票"
-              }
-            ]
+            "text": "搭機 墨爾本 ✈︎ 雪梨（上午 5:30 前到機場 · [航廈地圖](https://maps.app.goo.gl/RkHfqvoCXJ3j8sVP6))"
           },
           {
             "time": "上午 8:25",
@@ -596,23 +580,11 @@ window.TRIPS = [
         "timeline": [
           {
             "time": "晚上 6:00",
-            "text": "雪梨 ✈︎ 布里斯本（下午 4:30 前到機場）",
-            "photos": [
-              {
-                "src": "Pictures/Australia/Day11/flight-sydney-brisbane.png",
-                "alt": "雪梨飛布里斯本機票"
-              }
-            ]
+            "text": "雪梨 ✈︎ 布里斯本（下午 4:30 前到機場）"
           },
           {
             "time": "晚上 10:35",
-            "text": "布里斯本 ✈︎ 台灣",
-            "photos": [
-              {
-                "src": "Pictures/Australia/Day11/flight-brisbane-taipei.png",
-                "alt": "布里斯本飛台灣機票"
-              }
-            ]
+            "text": "布里斯本 ✈︎ 台灣"
           }
         ]
       }

@@ -251,7 +251,7 @@ figure img:hover { opacity: .94; }
 dialog.lightbox { border: 0; padding: 0; background: transparent; inset: 0; max-width: 100vw; width: 100vw; max-height: 100vh; height: 100vh; }
 @supports (height: 100dvh) { dialog.lightbox { max-height: 100dvh; height: 100dvh; } }
 dialog.lightbox::backdrop { background: rgba(8,16,24,.96); }
-dialog.lightbox .lb-stage { position: fixed; inset: 0; display: grid; place-items: center; padding: 64px 72px 104px; }
+dialog.lightbox .lb-stage { position: fixed; inset: 0; display: grid; grid-template: minmax(0, 1fr) / minmax(0, 1fr); place-items: center; padding: 64px 72px 104px; }  /* definite track so the photo's max-height: 100% fits it to the screen */
 dialog.lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; cursor: zoom-in; touch-action: none; user-select: none; -webkit-user-select: none; transition: transform .15s ease; }
 dialog.lightbox.zoomed img { cursor: grab; }
 dialog.lightbox.dragging img { transition: none; cursor: grabbing; }
