@@ -480,23 +480,34 @@ function setUpLightbox() {
   const image = lightbox.querySelector('img');
   const caption = lightbox.querySelector('.lb-caption');
   const count = lightbox.querySelector('.lb-count');
+  const stage = lightbox.querySelector('.lb-stage');
   let photos = [];
   let index = 0;
 
   // Zoom inside the lightbox: wheel, double-click / double-tap or pinch; drag to move while zoomed.
   // (The browser's own pinch-zoom can't pan inside a full-screen dialog.)
+  // Swipe (or mouse-drag) sideways to change photo; when zoomed, keep dragging past the photo's edge.
   const zoom = { scale: 1, x: 0, y: 0 };
   const pointers = new Map();
   let pinch = null;
+  let pinched = false;
   let moved = false;
+  let swiped = false;
+  let downOnImage = false;
   let lastTap = 0;
+  let slide = 0;
+  let sliding = false;
 
+  const maxPan = () => ({
+    x: image.offsetWidth * (zoom.scale - 1) / 2,
+    y: image.offsetHeight * (zoom.scale - 1) / 2,
+  });
   const applyZoom = () => {
-    const maxX = image.offsetWidth * (zoom.scale - 1) / 2;
-    const maxY = image.offsetHeight * (zoom.scale - 1) / 2;
-    zoom.x = Math.max(-maxX, Math.min(maxX, zoom.x));
-    zoom.y = Math.max(-maxY, Math.min(maxY, zoom.y));
-    image.style.transform = zoom.scale > 1 ? `translate(${zoom.x}px, ${zoom.y}px) scale(${zoom.scale})` : '';
+    const max = maxPan();
+    zoom.x = Math.max(-max.x, Math.min(max.x, zoom.x));
+    zoom.y = Math.max(-max.y, Math.min(max.y, zoom.y));
+    image.style.transform = zoom.scale > 1 || slide
+      ? `translate(${zoom.x + slide}px, ${zoom.y}px) scale(${zoom.scale})` : '';
     lightbox.classList.toggle('zoomed', zoom.scale > 1);
   };
   // Scale to `scale`, keeping the point under (cx, cy) where it is.
@@ -515,26 +526,79 @@ function setUpLightbox() {
   const resetZoom = () => {
     zoom.scale = 1;
     zoom.x = zoom.y = 0;
+    slide = 0;
     applyZoom();
   };
 
-  image.addEventListener('wheel', event => {
+  // Slide the photo off one side, then bring the next one in from the other.
+  const slideTo = step => {
+    if (sliding) return;
+    sliding = true;
+    const width = window.innerWidth;
+    image.style.transition = 'transform .18s ease-out';
+    image.style.transform = `translate(${zoom.x - step * width}px, ${zoom.y}px) scale(${zoom.scale})`;
+    setTimeout(() => {
+      image.style.transition = 'none';
+      show(index + step);
+      image.style.transform = `translateX(${step * width}px)`;
+      const slideIn = () => {
+        void image.offsetWidth;
+        image.style.transition = 'transform .2s ease-out';
+        image.style.transform = '';
+        setTimeout(() => {
+          image.style.transition = '';
+          sliding = false;
+        }, 220);
+      };
+      (image.decode ? image.decode() : Promise.resolve()).catch(() => {}).then(slideIn);
+    }, 180);
+  };
+  const go = step => {
+    if (photos.length > 1) slideTo(step);
+  };
+
+  let wheelX = 0;
+  let wheelTimer = 0;
+  let wheelDone = false;
+  stage.addEventListener('wheel', event => {
     event.preventDefault();
+    // Trackpad two-finger swipe sideways changes photo (when not zoomed).
+    if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
+      if (zoom.scale > 1) {
+        zoom.x -= event.deltaX;
+        applyZoom();
+        return;
+      }
+      wheelX += event.deltaX;
+      clearTimeout(wheelTimer);
+      wheelTimer = setTimeout(() => { wheelX = 0; wheelDone = false; }, 250);
+      if (!wheelDone && Math.abs(wheelX) > 80) {
+        wheelDone = true;  // one photo per swipe; the rest of this gesture is ignored
+        go(wheelX > 0 ? 1 : -1);
+      }
+      return;
+    }
     zoomTo(zoom.scale * (event.deltaY < 0 ? 1.25 : 0.8), event.clientX, event.clientY);
   }, { passive: false });
   image.addEventListener('dblclick', event => toggleZoom(event.clientX, event.clientY));
   image.addEventListener('dragstart', event => event.preventDefault());
-  image.addEventListener('pointerdown', event => {
-    image.setPointerCapture(event.pointerId);
+  stage.addEventListener('pointerdown', event => {
+    if (sliding || event.button > 0) return;
+    stage.setPointerCapture(event.pointerId);
     pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
-    moved = false;
+    if (pointers.size === 1) {
+      moved = pinched = swiped = false;
+      downOnImage = event.target === image;
+    }
     if (pointers.size === 2) {
       const [a, b] = [...pointers.values()];
       pinch = { dist: Math.hypot(a.x - b.x, a.y - b.y), scale: zoom.scale };
+      pinched = true;
+      slide = 0;
     }
     lightbox.classList.add('dragging');
   });
-  image.addEventListener('pointermove', event => {
+  stage.addEventListener('pointermove', event => {
     const last = pointers.get(event.pointerId);
     if (!last) return;
     const now = { x: event.clientX, y: event.clientY };
@@ -543,9 +607,13 @@ function setUpLightbox() {
       const [a, b] = [...pointers.values()];
       zoomTo(pinch.scale * Math.hypot(a.x - b.x, a.y - b.y) / pinch.dist, (a.x + b.x) / 2, (a.y + b.y) / 2);
       moved = true;
-    } else if (zoom.scale > 1) {
-      zoom.x += now.x - last.x;
-      zoom.y += now.y - last.y;
+    } else if (pointers.size === 1 && !pinched) {
+      // Pan while zoomed; whatever goes past the photo's edge (or all of it, unzoomed) slides the photo.
+      const max = maxPan().x;
+      const x = zoom.x + slide + now.x - last.x;
+      zoom.x = Math.max(-max, Math.min(max, x));
+      slide = x - zoom.x;
+      if (zoom.scale > 1) zoom.y += now.y - last.y;
       applyZoom();
       if (Math.abs(now.x - last.x) + Math.abs(now.y - last.y) > 2) moved = true;
     }
@@ -553,9 +621,21 @@ function setUpLightbox() {
   const endPointer = event => {
     pointers.delete(event.pointerId);
     if (pointers.size < 2) pinch = null;
-    if (!pointers.size) lightbox.classList.remove('dragging');
+    if (pointers.size) return;
+    lightbox.classList.remove('dragging');
+    if (slide) {
+      const step = slide < 0 ? 1 : -1;
+      if (Math.abs(slide) > Math.min(90, window.innerWidth * 0.15) && photos.length > 1 && event.type === 'pointerup') {
+        swiped = true;
+        slideTo(step);
+      } else {
+        slide = 0;
+        applyZoom();
+      }
+      return;
+    }
     // Double-tap to zoom on touch screens (they don't send dblclick reliably).
-    if (event.type === 'pointerup' && event.pointerType === 'touch' && !moved) {
+    if (event.type === 'pointerup' && event.pointerType === 'touch' && !moved && downOnImage) {
       if (event.timeStamp - lastTap < 300) {
         toggleZoom(event.clientX, event.clientY);
         lastTap = 0;
@@ -564,8 +644,8 @@ function setUpLightbox() {
       }
     }
   };
-  image.addEventListener('pointerup', endPointer);
-  image.addEventListener('pointercancel', endPointer);
+  stage.addEventListener('pointerup', endPointer);
+  stage.addEventListener('pointercancel', endPointer);
 
   const show = n => {
     resetZoom();
@@ -598,14 +678,14 @@ function setUpLightbox() {
     const button = event.target.closest('[data-lb]');
     if (button) {
       if (button.dataset.lb === 'close') lightbox.close();
-      else show(index + (button.dataset.lb === 'next' ? 1 : -1));
-    } else if (event.target === lightbox || event.target.classList.contains('lb-stage')) {
+      else go(button.dataset.lb === 'next' ? 1 : -1);
+    } else if (!moved && (event.target === lightbox || event.target === stage)) {
       lightbox.close();
     }
   });
   lightbox.addEventListener('keydown', event => {
-    if (event.key === 'ArrowRight') show(index + 1);
-    if (event.key === 'ArrowLeft') show(index - 1);
+    if (event.key === 'ArrowRight') go(1);
+    if (event.key === 'ArrowLeft') go(-1);
   });
   lightbox.addEventListener('close', resetZoom);
 }
