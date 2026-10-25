@@ -16,6 +16,7 @@ script.js             Hash router + page renderers, GitHub-API photo listing, ca
 style.css             Design tokens on :root (Coastal Editorial), then components; mobile rules at ≤700px
 logo.png, favicon.png, apple-touch-icon.png   Round logo cut from our photo (Okinawa Day4 #49)
 tools/itinerary_poster.py   Draws each Schedule page's itinerary image from trips.js
+tools/photo_panel.py        Local panel (python tools/photo_panel.py <trip> <day> → localhost:8766): right-click = day cover, left-click = remove photo (moved, not deleted), undo
 files.local.json      Local-preview file list (gitignored, see "Previewing locally")
 README.md             Short public description + how to add photos
 MEMORY.md             Decision log, user preferences, open items
