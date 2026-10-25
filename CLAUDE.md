@@ -39,7 +39,7 @@ Pictures/
 
 ## How the site works
 
-- **Design:** "Coastal Editorial" (ocean teal `--accent #0E7490`, sand-white `--bg #FAFAF7`; Manrope + Fraunces italic + Noto Sans TC). Desktop is finished; the phone layout still needs a redesign (user is unhappy with all phone mockups so far).
+- **Design:** "Coastal Editorial" (ocean teal `--accent #0E7490`, sand-white `--bg #FAFAF7`; Manrope + Fraunces italic + Noto Sans TC). Desktop is finished; the user says the phone layout is fine for now.
 - **Routes** (rendered into `<main>` by `render()` in `script.js`):
   - `#/` home — compact masthead (title, trips/countries count), hero photo rotating through the trips every 4s (no arrows/dots/pause — user removed them; pauses on hover, off with reduced motion), trip cards, banner photo credits
   - `#/<trip>` overview — banner, schedule card, one card per day (grouped by city when days have one)

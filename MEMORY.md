@@ -40,11 +40,14 @@ What the user decided, what they prefer, and what's still open. Read this with `
   - Nagoya: D1 plane at sunset #2, D2 us in front of the temple #66, shown whole and uncropped on the card (`coverWhole`; user: "dont zoom in just keep it as is"), D3 us at 河童橋 #56 (#66 is another couple, not us), D4 鰻魚飯 #1, D5 sushi #1, D6 ramen #2.
 - LINE strips photo dates and GPS, so dates can't be read from the photos — ask the user.
 
+## Settled (2026-10-26) — don't re-offer
+
+- Phone layout: fine for now; no redesign unless the user asks.
+- Ticket screenshots stay in git history (no history rewrite).
+- Nagoya Day3 #66 (another couple) stays in the Day 3 photo grid; it's just not the cover.
+
 ## Open items
 
-- **Phone layout** needs a redesign (user disliked every phone mockup; desktop was built first on purpose).
 - Australia: which other planned stops didn't happen; most Australia photos look like stock/online photos — swap in their own when provided.
 - Nagoya photos are full-size (Day 2 ≈ 25 MB); offered to resize to ~1600px for speed — not done yet.
-- Ticket screenshots are off the site but still in git history; rewriting history was offered, not done.
-- Nagoya Day3 #66 (another couple, not us) is still in the Day 3 photo grid; offered to move it out, no answer yet.
 - Australia `Unsorted/` (oyster-experience.png, thai-curry.jpg): day unknown.
