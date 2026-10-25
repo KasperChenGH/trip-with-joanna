@@ -768,7 +768,8 @@ window.TRIPS = [
       {
         "date": "9月26日",
         "title": "🏡 下呂溫泉合掌村 · 飛驒高山",
-        "cover": "Pictures/Nagoya/Day2/LINE_ALBUM_926名古屋day2_261025_17.jpg",
+        "cover": "Pictures/Nagoya/Day2/LINE_ALBUM_926名古屋day2_261025_66.jpg",
+        "coverPosition": "center 60%",
         "timeline": [
           {
             "time": "上午 9:30",
