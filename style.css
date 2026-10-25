@@ -365,6 +365,7 @@ dialog.lightbox.dragging img { transition: none; cursor: grabbing; }
 .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
 .ph:has(img:focus-visible) { outline: 3px solid var(--accent); outline-offset: 3px; }
 .ph img:focus-visible { outline: none; }
+.dc-cover.whole .ph img { object-fit: contain; }  /* day with coverWhole: show the whole cover photo, uncropped */
 .dc-cover .ph { border-radius: 0; aspect-ratio: auto; position: absolute; inset: 0; }
 @media (max-width: 700px) {
   .photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }

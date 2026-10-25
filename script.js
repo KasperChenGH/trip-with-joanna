@@ -251,7 +251,7 @@ function pageOverview(trip) {
     }
     // The day's own cover (its main event); Japan days use the first photo in their folder.
     const cover = day.cover
-      ? `<div class="dc-cover"><span class="dc-num">第 ${day.n} 天</span>${framedPhoto(day.cover, '', day.coverPosition ? ` style="object-position: ${esc(day.coverPosition)}"` : '')}</div>`
+      ? `<div class="dc-cover${day.coverWhole ? ' whole' : ''}"><span class="dc-num">第 ${day.n} 天</span>${framedPhoto(day.cover, '', day.coverPosition ? ` style="object-position: ${esc(day.coverPosition)}"` : '')}</div>`
       : `<div class="dc-cover soon" data-cover-folder="${esc(day.folder)}" data-cover-kind="day"><span class="dc-num">第 ${day.n} 天</span><span class="big" aria-hidden="true">${pad(day.n)}</span></div>`;
     return `${group}<a class="day-card" href="#/${trip.id}/day/${day.n}">${cover}<div class="dc-body">
       <p class="dc-date">${esc(day.date || `第 ${day.n} 天`)}</p>
