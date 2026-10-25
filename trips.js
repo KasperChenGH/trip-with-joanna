@@ -618,7 +618,8 @@ window.TRIPS = [
       {
         "date": "4月8日",
         "title": "⛩️ 國際通 · 波上宮",
-        "cover": "Pictures/Okinawa/Day2/LINE_ALBUM_48沖繩day2_261024_55.jpg",
+        "cover": "Pictures/Okinawa/Day2/LINE_ALBUM_48沖繩day2_261024_23.jpg",
+        "coverPosition": "center 100%",
         "timeline": [
           {
             "time": "上午",
@@ -699,7 +700,8 @@ window.TRIPS = [
       {
         "date": "4月11日",
         "title": "🍔 港川外人住宅 · A&W",
-        "cover": "Pictures/Okinawa/Day5/LINE_ALBUM_411沖繩day5_261024_11.jpg",
+        "cover": "Pictures/Okinawa/Day5/LINE_ALBUM_411沖繩day5_261024_3.jpg",
+        "coverPosition": "center 70%",
         "timeline": [
           {
             "time": "早餐",
