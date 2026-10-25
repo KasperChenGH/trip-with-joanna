@@ -789,7 +789,7 @@ window.TRIPS = [
       {
         "date": "9月27日",
         "title": "🏔️ 上高地一日遊",
-        "cover": "Pictures/Nagoya/Day3/LINE_ALBUM_927名古屋day3_261025_66.jpg",
+        "cover": "Pictures/Nagoya/Day3/LINE_ALBUM_927名古屋day3_261025_56.jpg",
         "timeline": [
           {
             "time": "全天",

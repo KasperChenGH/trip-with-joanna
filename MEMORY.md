@@ -37,7 +37,7 @@ What the user decided, what they prefer, and what's still open. Read this with `
 - Day covers (main event of the day):
   - Australia: D1 State Library Victoria, D2 St Kilda Beach, D3 Penguin Parade, D4 Twelve Apostles, D5 Opera House, D6 University of Sydney, D7 Three Sisters, D8 NYE fireworks, D9 Luna Park, D10 Bondi Beach, D11 none (only flights).
   - Okinawa: D1 暖暮拉麵 #12, D2 波上宮 #55, D3 瀨長島夕陽 #33, D4 古宇利島 #49, D5 A&W #11.
-  - Nagoya: D1 plane at sunset #2, D2 umbrella couple at 合掌村 #25, D3 河童橋 couple #66, D4 鰻魚飯 #1, D5 sushi #1, D6 ramen #2.
+  - Nagoya: D1 plane at sunset #2, D2 umbrella couple at 合掌村 #25, D3 us at 河童橋 #56 (#66 is another couple, not us), D4 鰻魚飯 #1, D5 sushi #1, D6 ramen #2.
 - LINE strips photo dates and GPS, so dates can't be read from the photos — ask the user.
 
 ## Open items
