@@ -16,7 +16,7 @@ What the user decided, what they prefer, and what's still open. Read this with `
 - Every trip uses the same pages; each day is its own page.
 - Home hero: rotates every **4s**, no arrows / dots / pause button. Masthead with 「我們的旅行回憶」 and the trips/countries count stays, but compact.
 - Day photos: **square thumbnails** (chosen over blurred fill, matte, polaroid, filmstrip, etc.). The blurred side fill was disliked.
-- Lightbox opens the whole photo fitted to the screen; zoom + pan inside it.
+- Lightbox opens the whole photo fitted to the screen; zoom + pan inside it; swipe / drag sideways to change photo (also when zoomed, by dragging past the edge).
 - Day pages: itinerary list on top with no photos inside it, then one photo grid.
 - Logo: round crop of the two of us (Okinawa Day4 #49) with a teal ring; also favicon and touch icon.
 - Footer: signature and tagline only, no nav links.
